@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<title>Etkinlik Oluştur</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    :root {
+        --primary-color: #5d67e8;
+        --primary-light: #8b92ff;
+        --secondary-color: #3b4557;
+        --bg-light: #f7f9fc;
+        --text-color: #333;
+        --border-color: #e0e6ef;
+        --success-color: #28a745;
+        --error-color: #dc3545;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: var(--bg-light);
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+    }
+
+    .top-home-button {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 12px 24px;
+        background-color: var(--secondary-color);
+        color: #fff;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: 500;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .top-home-button:hover {
+        background-color: #2c3445;
+        transform: translateY(-2px);
+    }
+
+    #container {
+        display: flex;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 20px auto 40px auto;
+        padding: 40px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    }
+
+    #formContainer, #skillsTableContainer {
+        flex: 1;
+        min-width: 350px;
+    }
+
+    #formContainer {
+        background: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    h2, h3 {
+        color: var(--secondary-color);
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        margin-top: 20px;
+        font-weight: 500;
+        color: var(--secondary-color);
+        font-size: 16px;
+    }
+
+    input, select {
+        width: 100%;
+        padding: 12px 15px;
+        margin-top: 8px;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 15px;
+        background: #fdfdfe;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus, select:focus {
+        border-color: var(--primary-color);
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(93, 103, 232, 0.1);
+    }
+
+    button[type="submit"] {
+        margin-top: 30px;
+        padding: 14px 0;
+        width: 100%;
+        background: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(93, 103, 232, 0.4);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(93, 103, 232, 0.5);
+    }
+
+    .error {
+        color: var(--error-color);
+        margin-top: 15px;
+        font-size: 14px;
+        min-height: 20px;
+        font-weight: 500;
+    }
+
+    #eventInfo {
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        background: var(--bg-light);
+        display: none;
+        border-radius: 10px;
+        font-size: 16px;
+        color: var(--text-color);
+    }
+
+    #skillsTableContainer {
+        background: #fff;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #fff;
+        margin-bottom: 25px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+        border: none;
+        padding: 15px 10px;
+        text-align: center;
+        font-size: 15px;
+        color: var(--text-color);
+    }
+
+    th {
+        background: var(--primary-color);
+        color: #fff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    tr:nth-child(even) td {
+        background: #fbfcfe;
+    }
+
+    tr:hover td {
+        background-color: #f0f4f8;
+        transition: background-color 0.2s;
+    }
+
+    #skillsTable, #multiSkillsTable {
+        margin-bottom: 25px;
+    }
+
+    @media (max-width: 992px) {
+        #container {
+            flex-direction: column;
+            padding: 20px;
+            gap: 20px;
+        }
+        .top-home-button {
+            margin: 10px auto;
+        }
+    }
+/* ZAMAN ÇİZELGESİ - DİKEY SİYAH ÇİZGİLİ TASARIM */
+.timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    background-color: #000;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    margin-left: -1px;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 50%;
+    top: 0;
+    left: 50%;
+    margin-left: -10px;
+}
+
+.timeline-item.left .timeline-content {
+    left: 70%;
+}
+
+.timeline-item.right .timeline-content {
+    left: 20%;
+}
+
+.timeline-content {
+    position: relative;
+    left: 30px;
+}
+
+.timeline-date {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.timeline-description {
+    margin-bottom: 10px;
+}
+
+
+</style>
+</head>
+<body>
+
+<a href="home.html" class="top-home-button">Anasayfaya Dön</a>
+
+<div id="container">
+  <div id="formContainer">
+  <h2>Etkinlik Oluştur</h2>
+  <form id="eventForm">
+   <label for="multiSkill">Çoklu Beceri Seç:</label>
+   <select id="multiSkill" name="multiSkill" required>
+    <option value="">-- Çoklu Beceri Seçiniz --</option>
+   </select>
+
+   <label for="basicSkill">Temel Beceri Seç:</label>
+   <select id="basicSkill" name="basicSkill" required>
+    <option value="">-- Temel Beceri Seçiniz --</option>
+   </select>
+
+   <label for="teacher">Öğretmen Seç:</label>
+   <select id="teacher" name="teacher" required>
+    <option value="">-- Öğretmen Seçiniz --</option>
+   </select>
+
+   
+
+   <label for="startDate">Etkinlik Başlangıç Tarihi:</label>
+   <input type="date" id="startDate" name="startDate" required />
+
+   <label for="endDate">Etkinlik Bitiş Tarihi:</label>
+   <input type="date" id="endDate" name="endDate" required />
+
+   <label for="quota">Kontenjan:</label>
+   <input type="number" id="quota" name="quota" min="1" required />
+
+   <button type="submit">Oluştur</button>
+   <div id="error" class="error"></div>
+  </form>
+  <div id="eventInfo"></div>
+ </div>
+
+  <div id="skillsTableContainer">
+  <h3>Temel Beceri Matriksi</h3>
+  <table id="skillsTable">
+   <thead>
+    <tr>
+     <th>Temel Beceri</th>
+     <th>Adet</th>
+    </tr>
+   </thead>
+   <tbody id="skillsTableBody">
+       </tbody>
+  </table>
+  <h3 style="margin-top:30px;">Çoklu Beceri Matriksi</h3>
+  <table id="multiSkillsTable">
+   <thead>
+    <tr>
+     <th>Çoklu Beceri</th>
+     <th>Adet</th>
+    </tr>
+   </thead>
+   <tbody id="multiSkillsTableBody">
+       </tbody>
+  </table>
+  
+  <!-- Zaman Çizelgesi Bölümü -->
+  <div style="margin-top: 40px; padding-top: 30px; border-top: 2px solid #e0e6ef;">
+    <h3 style="text-align: center; color: var(--primary-color); margin-bottom: 20px;">
+      <i class="fas fa-calendar-alt" style="margin-right: 10px;"></i>
+      Etkinlik Zaman Çizelgesi
+    </h3>
+    <p style="text-align: center; color: #666; margin-bottom: 20px;">
+      Tüm etkinliklerin tarihsel görünümü
+    </p>
+  </div>
+  
+
+<div class="timeline" id="timelineContainer">
+    <!-- Timeline items will be dynamically added here -->
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const multiSkill = document.getElementById('multiSkill');
+    const basicSkill = document.getElementById('basicSkill');
+    const teacherSelect = document.getElementById('teacher');
+
+    // --- Çoklu Beceri (Organizasyon) yükle ---
+    fetch('event_get_organizations.php')
+        .then(res => res.json())
+        .then(data => {
+            multiSkill.innerHTML = '<option value="">-- Organizasyon Seçiniz --</option>';
+            data.forEach(org => {
+                const option = document.createElement('option');
+                option.value = org.id;
+                option.textContent = org.name;
+                multiSkill.appendChild(option);
+            });
+        })
+        .catch(err => {
+            console.error('Organizasyonlar yüklenemedi:', err);
+            multiSkill.innerHTML = '<option disabled>Organizasyonlar yüklenemedi</option>';
+        });
+
+    // --- Çoklu Beceri değişince Temel Beceri yükle ---
+    multiSkill.addEventListener('change', () => {
+        const orgId = multiSkill.value;
+        basicSkill.innerHTML = '<option value="">-- Temel Beceri Seçiniz --</option>';
+
+        if (!orgId) return;
+
+        fetch(`get_skills.php?organization_id=${orgId}`)
+            .then(res => res.json())
+            .then(skills => {
+                skills.forEach(skill => {
+                    const option = document.createElement('option');
+                    option.value = skill.skill_name;
+                    option.textContent = skill.skill_name;
+                    basicSkill.appendChild(option);
+                });
+            })
+            .catch(err => {
+                console.error('Beceriler yüklenemedi:', err);
+            });
+
+        loadFilteredTeachers();
+    });
+
+    // --- Temel Beceri değişince öğretmenleri filtrele ---
+    basicSkill.addEventListener('change', loadFilteredTeachers);
+
+    // --- Öğretmenleri filtreleme fonksiyonu ---
+    function loadFilteredTeachers() {
+        const orgId = multiSkill.value;
+        const skillName = basicSkill.value;
+
+        teacherSelect.innerHTML = '<option value="">-- Öğretmen Seçiniz --</option>';
+
+        if (!orgId && !skillName) return;
+
+        const params = new URLSearchParams();
+        if (orgId) params.append('organization_id', orgId);
+        if (skillName) params.append('skill_name', skillName);
+
+        fetch('get_teachers.php?' + params.toString())
+            .then(res => res.json())
+            .then(data => {
+                teacherSelect.innerHTML = '<option value="">-- Öğretmen Seçiniz --</option>';
+
+                if (!Array.isArray(data)) {
+                    console.error('Beklenmeyen cevap:', data);
+                    const option = document.createElement('option');
+                    option.textContent = data.error || 'Öğretmenler yüklenemedi';
+                    option.disabled = true;
+                    teacherSelect.appendChild(option);
+                    return;
+                }
+
+                if (data.length === 0) {
+                    const option = document.createElement('option');
+                    option.textContent = 'Eğitmen bulunamadı';
+                    option.disabled = true;
+                    teacherSelect.appendChild(option);
+                    return;
+                }
+
+                data.forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = t.person_name;
+                    opt.textContent = t.person_name;
+                    teacherSelect.appendChild(opt);
+                });
+            })
+            .catch(err => {
+                console.error('Öğretmenler yüklenemedi:', err);
+                const option = document.createElement('option');
+                option.textContent = 'Öğretmenler yüklenemedi';
+                option.disabled = true;
+                teacherSelect.appendChild(option);
+            });
+    }
+
+    // --- Temel Beceri Matrisi Tablosunu Doldur ---
+    fetch('fetch_skills.php')
+        .then(res => res.json())
+        .then(data => {
+            const tableBody = document.getElementById('skillsTableBody');
+            tableBody.innerHTML = '';
+            
+            // Check if data is an array
+            if (Array.isArray(data)) {
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${item.skill_name}</td><td>${item.count}</td>`;
+                    tableBody.appendChild(row);
+                });
+            } else {
+                console.error('Beklenmeyen veri formatı:', data);
+                tableBody.innerHTML = '<tr><td colspan="2">Veri yüklenemedi</td></tr>';
+            }
+        })
+        .catch(err => console.error('Temel beceri tablosu yüklenemedi:', err));
+
+    // --- Çoklu Beceri Matrisi Tablosunu Doldur ---
+   /* fetch('fetch_organizations.php')
+        .then(res => res.json())
+        .then(data => {
+            const tableBody = document.getElementById('multiSkillsTableBody');
+            tableBody.innerHTML = '';
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${item.name}</td><td>${item.count}</td>`;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(err => console.error('Çoklu beceri tablosu yüklenemedi:', err));*/
+
+});
+
+document.getElementById('eventForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const errorDiv = document.getElementById('error');
+
+    const orgId = document.getElementById('multiSkill').value;
+    const skillName = document.getElementById('basicSkill').value;
+    const teacherName = document.getElementById('teacher').value;
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const quota = document.getElementById('quota').value;
+
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    if (start > end) {
+        errorDiv.textContent = "Başlangıç tarihi, bitiş tarihinden sonra olamaz!";
+        return;
+    }
+    if (start.getTime() === end.getTime()) {
+        errorDiv.textContent = "Başlangıç ve bitiş tarihleri aynı olamaz!";
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append('multiSkill', orgId);
+    formData.append('basicSkill', skillName);
+    formData.append('teacher', teacherName);
+    formData.append('startDate', startDate);
+    formData.append('endDate', endDate);
+    formData.append('quota', quota);
+
+    fetch('save_event.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Etkinlik başarıyla oluşturuldu!");
+            this.reset();
+        } else {
+            errorDiv.textContent = data.message || "Bir hata oluştu.";
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        errorDiv.textContent = "Sunucu ile bağlantı kurulamadı.";
+    });
+});
+
+// Zaman Çizelgesi JavaScript Kodu - Dikey Siyah Çizgili Tasarım
+document.addEventListener('DOMContentLoaded', () => {
+    const timelineContainer = document.getElementById('timelineContainer');
+    let events = [];
+    
+    // Etkinlikleri yükle
+    function loadEvents() {
+        fetch('api/get_events.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    events = data.events;
+                    renderTimeline();
+                } else {
+                    console.error('Etkinlikler yüklenemedi:', data.message);
+                    showNoEventsMessage();
+                }
+            })
+            .catch(error => {
+                console.error('Etkinlikler yüklenirken hata:', error);
+                showNoEventsMessage();
+            });
+    }
+    
+    // Etkinlik yok mesajı
+    function showNoEventsMessage() {
+        timelineContainer.innerHTML = `
+            <div style="text-align: center; padding: 60px 20px; color: #666;">
+                <i class="fas fa-calendar-times" style="font-size: 48px; margin-bottom: 20px; color: #ddd;"></i>
+                <h3 style="color: #999; margin-bottom: 10px;">Henüz etkinlik bulunmuyor</h3>
+                <p style="color: #aaa;">Yeni etkinlik oluşturduğunuzda burada görünecek</p>
+            </div>
+        `;
+    }
+    
+    // Zaman çizelgesini render et
+    function renderTimeline() {
+        // Mevcut etkinlikleri temizle
+        timelineContainer.innerHTML = '';
+        
+        if (events.length === 0) {
+            showNoEventsMessage();
+            return;
+        }
+        
+        // Etkinlikleri tarihe göre sırala
+        const sortedEvents = events.sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+        
+        // Her etkinlik için timeline item oluştur
+        sortedEvents.forEach((event, index) => {
+            const eventDate = new Date(event.start_date);
+            const endDate = new Date(event.end_date);
+            const isLeft = index % 2 === 0; // Alternatif yan yana düzenleme
+            
+            const timelineItem = document.createElement('div');
+            timelineItem.className = `timeline-item ${isLeft ? 'left' : 'right'}`;
+            
+            timelineItem.innerHTML = `
+                <div class="timeline-content">
+                    <div class="timeline-date">${formatDate(eventDate)}</div>
+                    <div class="timeline-description">${event.event_name}</div>
+                    <div class="timeline-details">
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span>Başlangıç: ${formatDate(eventDate)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Bitiş: ${formatDate(endDate)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                            <span>Öğretmen: ${event.teacher_name || 'Belirtilmemiş'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-book"></i>
+                            <span>Ders: ${event.skill_name || 'Belirtilmemiş'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-users"></i>
+                            <span>Kontenjan: ${event.capacity || 'Belirtilmemiş'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Hover efekti
+            timelineItem.addEventListener('mouseenter', () => {
+                timelineItem.style.transform = 'scale(1.02)';
+            });
+            
+            timelineItem.addEventListener('mouseleave', () => {
+                timelineItem.style.transform = 'scale(1)';
+            });
+            
+            // Tıklama efekti
+            timelineItem.addEventListener('click', () => {
+                showEventDetails(event);
+            });
+            
+            timelineContainer.appendChild(timelineItem);
+        });
+    }
+    
+    // Etkinlik detaylarını göster
+    function showEventDetails(event) {
+        const startDate = new Date(event.start_date);
+        const endDate = new Date(event.end_date);
+        const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)) + 1;
+        
+        alert(`
+📅 ${event.event_name}
+
+📅 Başlangıç: ${formatDate(startDate)}
+📅 Bitiş: ${formatDate(endDate)}
+⏱️ Süre: ${duration} gün
+👨‍🏫 Öğretmen: ${event.teacher_name || 'Belirtilmemiş'}
+📚 Ders: ${event.skill_name || 'Belirtilmemiş'}
+👥 Kontenjan: ${event.capacity || 'Belirtilmemiş'}
+        `);
+    }
+    
+    // Tarih formatla
+    function formatDate(date) {
+        return date.toLocaleDateString('tr-TR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    }
+    
+    
+    // Sayfa yüklendiğinde etkinlikleri yükle
+    loadEvents();
+    
+    // Her 30 saniyede bir etkinlikleri yenile
+    setInterval(loadEvents, 30000);
+});
+</script>
+</body>
+</html>

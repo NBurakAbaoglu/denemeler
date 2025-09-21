@@ -1,0 +1,15 @@
+[05-Sep-2025 13:28:46 Europe/Berlin] PHP Warning:  require_once(config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\polivalans\api\update_organization_skill.php on line 9
+[05-Sep-2025 13:28:46 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\polivalans\api\update_organization_skill.php:9
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\polivalans\api\update_organization_skill.php on line 9
+[05-Sep-2025 13:33:06 Europe/Berlin] PHP Warning:  require_once(config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\polivalans\api\update_organization_skill.php on line 13
+[05-Sep-2025 13:33:06 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\polivalans\api\update_organization_skill.php:13
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\polivalans\api\update_organization_skill.php on line 13
+[05-Sep-2025 13:34:05 Europe/Berlin] PHP Warning:  require_once(config.php): Failed to open stream: No such file or directory in C:\xampp\htdocs\polivalans\api\update_organization_skill.php on line 17
+[05-Sep-2025 13:34:05 Europe/Berlin] PHP Fatal error:  Uncaught Error: Failed opening required 'config.php' (include_path='C:\xampp\php\PEAR') in C:\xampp\htdocs\polivalans\api\update_organization_skill.php:17
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\polivalans\api\update_organization_skill.php on line 17

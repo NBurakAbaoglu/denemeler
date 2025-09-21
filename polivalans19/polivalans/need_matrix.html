@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Eğitim İhtiyaç Matriksi</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 700px;
+            margin: 30px auto;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        td {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        .loading {
+            text-align: center;
+            margin: 20px auto;
+            font-size: 18px;
+            color: #555;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Eğitim İhtiyaç Matriksi</h1>
+<h2> Temel Beceriler Tablosu</h2>
+<div id="loadingSkills" class="loading">Skill verileri yükleniyor...</div>
+<table id="skillTable" style="display:none;">
+    <thead>
+        <tr id="tableHeadersSkills"></tr>
+    </thead>
+    <tbody>
+        <tr id="tableCountsSkills"></tr>
+    </tbody>
+</table>
+
+<h2>Çoklu Beceri İsimleri ve Sayıları</h2>
+<div id="loadingOrganizations" class="loading">Çoklu Beceri verileri yükleniyor...</div>
+<table id="organizationTable" style="display:none;">
+    <thead>
+        <tr id="tableHeadersOrg"></tr>
+    </thead>
+    <tbody>
+        <tr id="tableCountsOrg"></tr>
+    </tbody>
+</table>
+
+<script>
+    // Skill verilerini getir
+    fetch('fetch_skills.php')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('loadingSkills').style.display = 'none';
+            const table = document.getElementById('skillTable');
+            const headersRow = document.getElementById('tableHeadersSkills');
+            const countsRow = document.getElementById('tableCountsSkills');
+
+            if(Object.keys(data).length === 0) {
+                document.getElementById('loadingSkills').textContent = 'Skill verisi bulunamadı.';
+                return;
+            }
+
+            for (const skill in data) {
+                const th = document.createElement('th');
+                th.textContent = skill;
+                headersRow.appendChild(th);
+            }
+            for (const skill in data) {
+                const td = document.createElement('td');
+                td.textContent = data[skill];
+                countsRow.appendChild(td);
+            }
+
+            table.style.display = 'table';
+        })
+        .catch(error => {
+            document.getElementById('loadingSkills').textContent = 'Skill verisi yüklenirken hata oluştu.';
+            console.error(error);
+        });
+
+    // Organizasyon verilerini getir
+    fetch('fetch_organizations.php')
+
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('loadingOrganizations').style.display = 'none';
+            const table = document.getElementById('organizationTable');
+            const headersRow = document.getElementById('tableHeadersOrg');
+            const countsRow = document.getElementById('tableCountsOrg');
+
+            if(Object.keys(data).length === 0) {
+                document.getElementById('loadingOrganizations').textContent = 'Organizasyon verisi bulunamadı.';
+                return;
+            }
+
+            for (const orgName in data) {
+                const th = document.createElement('th');
+                th.textContent = orgName;
+                headersRow.appendChild(th);
+            }
+            for (const orgName in data) {
+                const td = document.createElement('td');
+                td.textContent = data[orgName];
+                countsRow.appendChild(td);
+            }
+
+            table.style.display = 'table';
+        })
+        .catch(error => {
+            document.getElementById('loadingOrganizations').textContent = 'Organizasyon verisi yüklenirken hata oluştu.';
+            console.error(error);
+        });
+</script>
+
+</body>
+</html>

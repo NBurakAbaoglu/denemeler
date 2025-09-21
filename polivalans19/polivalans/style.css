@@ -1,0 +1,900 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);
+    color: #333;
+   width: 3000px; /* Sabit genişlik yerine kaydırılabilir yapı */
+}
+
+/* Genişlikleri belirli sütunlar */
+th.sira-cell, td.sira-cell {
+    width: 85px;
+}
+
+th.sirket-cell, td.sirket-cell {
+    width: 177px;
+}
+
+th.unvan-cell, td.unvan-cell {
+    width: 366px;
+}
+
+th.sicil-cell, td.sicil-cell {
+    width: 185px;
+}
+
+th.corner-sutun, td.corner-sutun {
+    width: 536px;
+}
+
+th.four-merged-cell {
+    width: 1164px;
+}
+
+/* Kapsayıcı div */
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 3000px; /* artık sabit genişlik */
+    backdrop-filter: blur(10px);
+    white-space: nowrap;
+}
+
+/* Başlık */
+.container h1 {
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 2.8rem;
+    color: #29588C;
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    text-shadow: 1px 1px 4px rgba(41, 88, 140, 0.5);
+    text-transform: uppercase;
+}
+
+.container h1 .bold-text {
+    font-weight: 700;
+}
+
+.container h1 .light-text {
+    font-weight: 300;
+}
+
+/* Tablo */
+.excel-table {
+    border-collapse: collapse;
+     min-width: 2500px; /* içerik gelse de gelmese de geniş kalır */
+    table-layout: fixed;
+    table-layout: fixed;
+    margin: 20px auto;
+    border: 3px solid #4a5568;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Hücreler */
+.excel-table th,
+.excel-table td {
+    border: 1px solid #e2e8f0;
+    text-align: center;
+    vertical-align: top;
+    transition: all 0.3s ease;
+    min-width: 30px;
+    height: 15px;
+    padding: 12px 8px;
+}
+
+/* Başlık hücreleri */
+.excel-table th {
+    background: gray;
+    color: white;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.excel-table thead tr:first-child th {
+    height: 300px;
+    padding-top: 25px;
+    width: 136px;
+    padding-bottom: 25px;
+    vertical-align: middle;
+}
+
+/* Döndürülmüş başlık */
+.rotated-header {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: white;
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+.rotated-header:hover {
+    background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+}
+
+/* Boş hücre */
+.empty-cell {
+    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    transition: all 0.3s ease;
+}
+
+.empty-cell:hover {
+    background: linear-gradient(135deg, #e6fffa 0%, #b2f5ea 100%);
+}
+
+/* corner_sutün yerine corner-sutun kullanılmış */
+.corner-sutun {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    font-weight: 400;
+    text-align: left;
+    padding-left: 20px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Satır başlığı */
+.row-header {
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+    color: white;
+    font-weight: 400;
+    text-align: left;
+    width: 138px;
+  height: 168px;
+    padding-left: 20px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+.row-header:hover {
+    background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);
+}
+
+        
+        .persons-cell{
+             background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
+            color: white;
+            font-weight: 400;
+            text-align: left;
+            padding-left: 20px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .persons-cell:hover{
+            background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);
+        }
+        .highlight-cell {
+  background-color: #4299e1; /* İstediğin renk */
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+  color: white; /* Eğer gerekirse */
+  transition: background-color 0.3s ease;
+}
+
+        
+        .corner-cell {
+             background-color: #A9A9A9;
+            border: 1px solid #4a5568;
+            color: white;
+            font-weight: 150;
+        }
+        
+        .add-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+        
+        .add-button:hover {
+            background-color: #45a049;
+        }
+       .table-scroll-wrapper {
+    overflow-x: auto; /* Yatay kaydırma */
+    overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+
+        
+        .editable-cell {
+            background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+            cursor: text;
+            border: 3px solid #4299e1;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+           width: 138px;
+  height: 168px;
+            text-align: center;
+            font-size: 12px;
+            resize: both;
+            overflow: auto;
+            min-width: 30px;
+            min-height: 120px;
+            white-space: nowrap;
+            word-wrap: normal;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(66, 153, 225, 0.3);
+        }
+        
+        .editable-cell:focus {
+            outline: none;
+            border: 3px solid #3182ce;
+            background: linear-gradient(135deg, #ffffff 0%, #ebf8ff 100%);
+            box-shadow: 0 6px 20px rgba(66, 153, 225, 0.4);
+        }
+        .organization-cell {
+ width: 138px;
+  height: 168px;  /* hücrenin genişliği */
+  padding: 0;     /* padding varsa butonun boyutunu daraltır, kaldır */
+  box-sizing: border-box;
+}
+.hover-column {
+  min-width: 120px !important; /* büyütmek istediğin genişlik */
+  transition: min-width 0.3s ease;
+  background-color: #d0ebff; /* istersen hover renk efekti */
+  /* opsiyonel ekstra stil */
+}
+
+       .organization-button {
+  height: 100%;
+  width: 100%;
+  padding: 0;   /* butonun kendi padding'ini kaldır */
+  box-sizing: border-box;
+
+  font-family: 'Montserrat', sans-serif;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  font-size: large;
+
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+
+  background: gray;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+
+        
+        .organization-button:hover {
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+            color: #d4c26a;
+             transform: rotate(180deg) scale(1.1);
+            font-size: large;
+        }
+        .organization-button.active{
+            background: linear-gradient(135deg, #3182ce 0%, #2c5282 100%);
+            color: #d4c26a;
+            font-size: large
+        }
+        .rotated-header {
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .rotated-header:hover {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
+        }
+        
+        .name-input {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+            border: 2px solid #48bb78;
+            padding: 8px 12px;
+            font-size: 12px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(72, 187, 120, 0.2);
+        }
+        
+        .name-input:focus {
+            outline: none;
+            border: 2px solid #38a169;
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+            box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+        }
+        
+        .name-button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background-color 0.3s;
+            width: 100%;
+            text-align: center;
+        }
+.vertical-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  padding: 10px;
+  font-weight: 600;
+  width: 138px;     /* sabit genişlik */
+  height: 168px;    /* sabit yükseklik */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box; /* padding dahil */
+}
+
+        .name-button:hover {
+            background-color: #20c997;
+        }
+        .header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Diğer stiller örnek olarak */
+.capacity-input {
+    width: 100%;
+    height: 40px;
+    border: 2px solid rgb(52, 152, 219);
+    border-radius: 6px;
+    background: rgb(255, 255, 255);
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: rgb(73, 80, 87);
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 4px;
+}
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+.btn-primary {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+    color: white;
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(149, 165, 166, 0.3);
+}
+
+.btn-logout {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.btn-logout:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-settings {
+     background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);
+    color: white;
+}
+
+.btn-settings:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(155, 89, 182, 0.3);
+}.btn-danger {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    color: white;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    color: #7f8c8d;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-icon:hover {
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #f8f9fa;
+  box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  border-radius: 0 12px 12px 0;
+}
+
+.mobile-menu.open {
+  transform: translateX(0);
+}
+
+.mobile-menu-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #2c3e50;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.mobile-menu-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+/* Kart görünümü */
+.menu-card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 16px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.menu-card:hover {
+  transform: translateX(5px);
+}
+
+/* Menü butonu */
+.menu-btn {
+  width: 100%;
+  padding: 12px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f0f0f0;
+  color: #2c3e50;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.menu-btn:hover {
+  background-color: #e2e8f0;
+}
+
+.logout-card {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+}
+
+.menu-btn.logout {
+  background: transparent;
+  color: white;
+}
+
+.menu-btn.logout:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+ #hamburgerMenu {
+    position: relative;
+    margin: 16px auto;
+    width: 42px;
+    height: 42px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid #ccc;
+}
+
+#hamburgerMenu:hover {
+    background-color: #f2f2f2;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#hamburgerMenu i {
+    font-size: 18px;
+    color: #333;
+}
+/*Organizasyon butonlarına basılınca çıkan form */
+.modal-content {
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        max-width: 600px;
+        margin: auto;
+        font-family: 'Segoe UI', sans-serif;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+    }
+
+    .modal-header h3 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: #333;
+    }
+
+    .modal-body h4 {
+        margin-bottom: 15px;
+        color: #007bff;
+        font-weight: 600;
+        border-left: 4px solid #007bff;
+        padding-left: 10px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 6px;
+        color: #444;
+    }
+
+    input[type="date"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    input[type="date"]:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    textarea {
+        resize: vertical;
+    }
+
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .form-actions button {
+        padding: 8px 16px;
+        border-radius: 5px;
+        font-size: 0.95rem;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+.custom-button {
+    padding: 8px 16px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.custom-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.custom-primary:hover {
+    background-color: #0069d9;
+}
+
+.custom-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.custom-secondary:hover {
+    background-color: #5a6268;
+}
+
+.custom-danger {
+    background-color: #dc3545;
+    color: white;
+    margin-right: auto;
+}
+
+.custom-danger:hover {
+    background-color: #c82333;
+}
+
+/* ARAMA TABLOSU */
+.skills-table {
+    min-width: 600px;
+}
+.user-column {
+    min-width: 120px;
+}
+.skills-table {
+    width: 100%;
+    min-width: 800px; /* Minimum tablo genişliği */
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    table-layout: fixed; /* Sütun genişliklerini sabitler */
+}
+
+.skills-table th {
+    background: #f8f9fa;
+    padding: 20px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #2c3e50;
+    border-bottom: 2px solid #e9ecef;
+    position: relative;
+}
+
+.skills-table th.user-column {
+    width: 200px;
+    min-width: 200px;
+}
+
+.skills-table th.subject-column {
+    width: 180px;
+    min-width: 180px;
+    text-align: center;
+}
+
+.skills-table th.actions-column {
+    width: 120px;
+    min-width: 120px;
+    text-align: center;
+}
+
+.column-controls {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.skills-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.skills-table tbody tr:hover {
+    background: #f8f9fa;
+}
+.table-scroll-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+
+
+
+
+/* Yatay kaydırma çubuğu stilleri */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+
+/* Firefox için kaydırma çubuğu */
+
+.skills-table th.user-column {
+    width: 200px;
+    min-width: 200px;
+}
+
+
+/* Sağ Alttaki Bilgilendirme Kartı (Modal içinde) */
+/* Sağda Küçük Kart (Modal içinde sağa yaslı) */
+.legend-card {
+  position: relative;
+  margin-top: 20px;
+  margin-left: auto;         /* sola boşluk, sağa yaslanmak için */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 12px 15px;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  width: 250px;              /* Daha küçük genişlik */
+}
+
+.legend-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.legend-card ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.legend-card li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  color: #444;
+  font-size: 15px;
+}
+
+.legend-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+
+.legend-card img {
+  height: 2em;
+  width: auto;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+
+
+.person-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+     background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.person-info {
+    flex: 1;
+}
+
+.person-name {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.person-email {
+    font-size: 12px;
+    color: #666;
+}
+
+.person-position {
+    font-size: 11px;
+    color: #999;
+    font-style: italic;
+}
+
+.no-results {
+    padding: 20px;
+    text-align: center;
+    color: #666;
+    font-style: italic;
+}
+
+.search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.search-results::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
