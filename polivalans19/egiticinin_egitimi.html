@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eğiticinin Eğitimi - Kurumsal Eğitim Sistemi</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .table-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #e9ecef;
+        }
+
+        .table-container h2 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .excel-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .excel-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+            border: none;
+        }
+
+        .excel-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .excel-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .excel-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .status-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-btn.completed {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-btn.not-completed {
+            background: #dc3545;
+            color: white;
+        }
+
+        .status-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 1000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: #28a745;
+        }
+
+        .notification.error {
+            background: #dc3545;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .no-data i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Geri
+            </button>
+            <h1><i class="fas fa-graduation-cap"></i> Eğiticinin Eğitimi</h1>
+            <p>Çoklu beceri eğitimlerinin durumunu takip edin</p>
+        </div>
+
+        <div class="content">
+            <div class="table-container">
+                <h2><i class="fas fa-table"></i> Eğitim Durumu Tablosu</h2>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Veriler yükleniyor...</p>
+                </div>
+
+                <div id="tableContent">
+                    <!-- Tablo buraya yüklenecek -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sayfa yüklendiğinde verileri yükle
+        document.addEventListener('DOMContentLoaded', function() {
+            loadTrainerTrainingData();
+        });
+
+        function loadTrainerTrainingData() {
+            document.getElementById('loading').classList.add('show');
+            
+            fetch('api/get_trainer_training_data.php')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loading').classList.remove('show');
+                    
+                    if (data.success) {
+                        displayTable(data.data);
+                    } else {
+                        showNotification('Veriler yüklenemedi: ' + data.message, 'error');
+                        document.getElementById('tableContent').innerHTML = `
+                            <div class="no-data">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Veriler yüklenirken hata oluştu</p>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('loading').classList.remove('show');
+                    console.error('Veri yükleme hatası:', error);
+                    showNotification('Veriler yüklenirken hata oluştu', 'error');
+                    document.getElementById('tableContent').innerHTML = `
+                        <div class="no-data">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Veriler yüklenirken hata oluştu</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function displayTable(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('tableContent').innerHTML = `
+                    <div class="no-data">
+                        <i class="fas fa-inbox"></i>
+                        <p>Henüz eğitim verisi bulunmuyor</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let tableHTML = `
+                <table class="excel-table">
+                    <thead>
+                        <tr>
+                            <th>Sıra</th>
+                            <th>Şirket Adı</th>
+                            <th>Unvanı</th>
+                            <th>Sicil No</th>
+                            <th>Kişi Adı</th>
+                            <th>Çoklu Beceri Adı</th>
+                            <th>Organizasyon Adı</th>
+                            <th>Temel Beceri Adı</th>
+                            <th>Eğiticinin Eğitimi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            data.forEach((item, index) => {
+                const trainingStatus = item.training_status || 'tamamlanmadı';
+                const isCompleted = trainingStatus === 'tamamlandı';
+                
+                tableHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.company_name || '-'}</td>
+                        <td>${item.title || '-'}</td>
+                        <td>${item.registration_no || '-'}</td>
+                        <td>${item.person_name || '-'}</td>
+                        <td>${item.multi_skill_name || '-'}</td>
+                        <td>${item.organization_name || '-'}</td>
+                        <td>${item.skill_name || '-'}</td>
+                        <td>
+                            <button class="status-btn ${isCompleted ? 'completed' : 'not-completed'}" 
+                                    onclick="toggleTrainingStatus(${item.id}, '${trainingStatus}')">
+                                ${isCompleted ? 'Tamamlandı' : 'Tamamlanmadı'}
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += `
+                    </tbody>
+                </table>
+            `;
+
+            document.getElementById('tableContent').innerHTML = tableHTML;
+        }
+
+        function toggleTrainingStatus(id, currentStatus) {
+            const newStatus = currentStatus === 'tamamlandı' ? 'tamamlanmadı' : 'tamamlandı';
+            
+            fetch('api/update_training_status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    planned_multi_skill_id: id,
+                    training_status: newStatus
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(`Eğitim durumu ${newStatus === 'tamamlandı' ? 'tamamlandı' : 'tamamlanmadı'} olarak güncellendi`, 'success');
+                    loadTrainerTrainingData(); // Tabloyu yenile
+                } else {
+                    showNotification('Hata: ' + data.message, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Durum güncelleme hatası:', error);
+                showNotification('Durum güncellenirken hata oluştu', 'error');
+            });
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>
