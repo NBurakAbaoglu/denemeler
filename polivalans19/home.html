@@ -1,0 +1,2711 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+         <style>
+         /* Navbar İçin Genel Ayarlar */
+:root {
+  --primary-blue: #007bff;
+  --primary-hover: #0056b3;
+  --text-dark: #333;
+  --text-light: #666;
+  --bg-light: #f8f9fa;
+  --bg-white: #ffffff;
+  --border-color: #dee2e6;
+  --shadow-subtle: 0 4px 15px rgba(0, 0, 0, 0.05);
+  --transition-ease: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.navbar-container * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-container {
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-container .navbar {
+  background: var(--bg-white);
+  border-radius: 0;
+  padding: 18px 40px;
+  max-width: none;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: var(--shadow-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 25px;
+}
+
+.navbar-container .brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-blue);
+  text-decoration: none;
+  margin-right: 50px;
+  letter-spacing: -0.5px;
+}
+
+.navbar-container .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  align-items: center;
+}
+
+.navbar-container .nav-links li a {
+  text-decoration: none;
+  color: var(--text-light);
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 25px;
+  transition: var(--transition-ease);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.navbar-container .nav-links li a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-blue);
+  border-radius: 25px;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s ease-out;
+}
+
+.navbar-container .nav-links li a:hover {
+  color: var(--bg-white);
+  transform: translateY(-2px);
+}
+
+.navbar-container .nav-links li a:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.navbar-container .toggle {
+  display: none;
+  font-size: 28px;
+  background: none;
+  border: none;
+  color: var(--text-dark);
+  cursor: pointer;
+  margin-left: auto;
+}
+
+/* responsive tasarım kısmı aynı kalır */
+@media (max-width: 768px) {
+  .navbar-container .navbar {
+    padding: 15px 20px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .navbar-container .brand {
+    margin-right: 0;
+  }
+
+  .navbar-container .toggle {
+    display: block;
+  }
+
+  .navbar-container .nav-links {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    display: none;
+    margin-top: 15px;
+  }
+
+  .navbar-container .nav-links.active {
+    display: flex;
+  }
+
+  .navbar-container .nav-links li a {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-align: left;
+    color: var(--text-dark);
+  }
+
+  .navbar-container .nav-links li a::before {
+    display: none;
+  }
+
+  .navbar-container .nav-links li a:hover {
+    background-color: var(--bg-light);
+    color: var(--primary-blue);
+    transform: none;
+  }
+}
+
+/* Yazdırma Butonu Stilleri */
+.print-button {
+  background-color: var(--primary-blue);
+  color: var(--bg-white);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition-ease);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.print-button:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Sayfa Yazdırılırken Butonu Gizle */
+@media print {
+  .print-button,
+  .navbar-container .navbar {
+    display: none;
+  }
+}
+
+
+/*----------------------------------------------------------------------------------*/
+
+     input.match {
+       border: 2px solid green;
+     }
+     
+     /* Tablo hücrelerinin boyutlarını sabit tut */
+     .excel-table th,
+     .excel-table td {
+       min-height: 210px;
+       box-sizing: border-box;
+     }
+     
+     /* Tablo container'ını sabit pozisyonda tut */
+     .container {
+       position: relative;
+       top: 0;
+       left: 0;
+       transform-origin: top left;
+       transition: transform 0.3s ease;
+     }
+     
+     /* Corner hücresi için özel boyut */
+     .excel-table .corner-cell {
+       min-height: 50px;
+     }
+     
+     /* Row header hücreleri için özel boyut */
+     .excel-table .row-header {
+       min-width: 150px;
+       min-height: 40px;
+     }
+     
+     /* Dikey yazılar için özel boyut */
+     .excel-table .vertical-text {
+       min-width: 30px;
+       min-height: 25px;
+     }
+     </style>
+     <style>
+        /*yakınlaştırıp uzaklaştırma butonu*/
+  .excel-table-wrapper {
+  transform: scale(0.5);
+  transform-origin: top left;
+  transition: transform 0.3s ease;
+}
+
+  .zoom-slider-container {
+    text-align: right;
+    margin-top: 20px;
+  }
+
+  .zoom-slider-container label {
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  input[type="range"] {
+    width: 300px;
+  }
+
+
+   /* Sadece bu tabloya özel stil ayarları */
+   .coklu-beceri-tablosu {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            border: 1px solid #e9ecef;
+            border-radius: 10px; /* Kenar yuvarlaklığı ekledim */
+            overflow: hidden; /* Kenar yuvarlaklığının içerideki içerik için de çalışmasını sağlar */
+        }
+        
+        .coklu-beceri-tablosu thead tr {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .coklu-beceri-tablosu th, .coklu-beceri-tablosu td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .coklu-beceri-tablosu th:first-child, .coklu-beceri-tablosu td:first-child {
+            width: 60%;
+            text-align: left;
+        }
+        
+        .coklu-beceri-tablosu th:last-child, .coklu-beceri-tablosu td:last-child {
+            width: 40%;
+            text-align: center;
+        }
+        
+        /* Satır üzerindeyken renk değiştirme efekti */
+        .coklu-beceri-tablosu tbody tr:hover {
+            background-color: #f1f1f1;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Son satırın alt çizgisini kaldırma */
+        .coklu-beceri-tablosu tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Diğer genel stil sınıfları aynı kalabilir */
+        .modal-container {
+            width: 500px;
+            max-width: 90%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 0;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            z-index: 9999;
+            cursor: default;
+            display: none;
+            overflow: hidden;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-header-section {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px 30px 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .modal-header-section h3 {
+            margin: 0;
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .modal-header-section p {
+            margin: 8px 0 0 0;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        .modal-content-area {
+            background: white;
+            padding: 30px;
+        }
+
+        .skill-table-wrapper {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e9ecef;
+        }
+
+        .organization-name {
+            display: flex;
+            align-items: center;
+        }
+        
+        .organization-icon {
+            color: #667eea;
+            margin-right: 6px;
+        }
+
+        .request-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 18px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+
+
+
+
+</style>
+</head>
+<body>
+    
+<!-- Üst Kısımdaki Navbar-->
+
+
+ <nav class="navbar-container">
+  <div class="navbar">
+    <div class="brand">LOGO GELEBİLİR</div>
+    <button class="toggle" id="menuToggle">&#9776;</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="home.html">Polivalans</a></li>
+      <li><a href="egitim_plani.html">Eğitim</a></li>
+      <li><a href="event_form.html">Etkinlik</a></li>
+      <li><a href="need_matrix.html">İhtiyaç</a></li>
+      <li><a href="ogretmenler.html">Öğretmenler</a></li>
+      <li><a href="egiticinin_egitimi.html">Eğiticinin Eğitimi</a></li>
+      <button class="print-button" onclick="printTable()">Yazdır</button>
+    </ul>
+  </div>
+</nav>
+
+
+
+<!-- Hamburger Menü İkonu: Sabit pozisyonda, mobil görünümde açılır menüyü açar -->
+<div id="hamburgerMenu" onclick="toggleMobileMenu()" style="position: fixed; top: 15px; left: 15px; cursor: pointer; z-index: 1001;">
+  <i class="fas fa-bars" style="font-size: 24px; color: #333;"></i>
+</div>
+
+<!-- Mobil Menü: Sol tarafta açılan menü -->
+<div class="mobile-menu" id="mobileMenu">
+  <!-- Menü kapatma butonu -->
+  <button class="mobile-menu-close" onclick="closeMobileMenu()">
+    <i class="fas fa-times"></i>
+  </button>
+  <div class="mobile-menu-content">
+    <!-- Menü başlığı -->
+    <h3>Menü</h3>
+    
+    <!-- Menü öğeleri kartları -->
+    <div class="menu-card">
+      <!-- Hakkımızda butonu (mobilde) -->
+      <button class="menu-btn" onclick="gotoEvent(); closeMobileMenu();">
+  <i class="material-icons" style="vertical-align: middle;">home</i> Polivalans
+</button>
+
+    </div>
+    <div class="menu-card">
+      <button class="menu-btn" onclick="gotolesson(); closeMobileMenu();">
+        <i class="material-icons">school</i> Eğitim Sayfası
+      </button>
+    </div>
+
+    <div class="menu-card">
+      <!-- Bize Ulaşına git butonu (mobilde) -->
+      <button class="menu-btn" onclick="gotoMatrix(); closeMobileMenu();">
+        <i class="material-icons">grid_view</i> İhtiyaç Matrisi
+      </button>
+    </div>
+
+    <div class="menu-card">
+      <!-- Ayarlar butonu (mobilde) -->
+      <button class="menu-btn" onclick="goToSettings(); closeMobileMenu();">
+        <i class="material-icons">settings</i> Ayarlar
+      </button>
+    </div>
+
+    <div class="menu-card logout-card">
+      <!-- Çıkış butonu (mobilde) -->
+      <button class="menu-btn logout" onclick="logout(); closeMobileMenu();">
+        <i class="fas fa-sign-out-alt"></i> Çıkış
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+<!-- Zoom Slider - Sabit pozisyon -->
+<div class="zoom-slider-container" style="
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+">
+  <label for="zoomRange" style="font-size: 12px; font-weight: 500; color: #333; margin-right: 8px;">Zoom:</label>
+  <input type="range" id="zoomRange" min="50" max="150" value="100" style="width: 120px;">
+  <span id="zoomValue" style="font-size: 12px; color: #666; margin-left: 5px;">100%</span>
+</div>
+<!-- Ana container: Sayfanın ana içeriğinin bulunduğu bölüm -->
+    <div class="container" id="tableWrapper">    
+
+        <h1>
+  <span class="bold-text">Polivalans</span> 
+  <span class="light-text">Dashboard</span>
+</h1>
+
+        
+      <table class="excel-table table-container">
+    <thead>
+        <tr>
+            <!-- 4 sütun birleşik (1164px) -->
+            <th        class="empty-cell four-merged-cell" colspan="4"><input style="font-size: x-large; "     type="text" ></th>
+
+            <!-- corner sütun (536px) -->
+            <th class="corner-sutun"></th>
+
+            <th><div class="vertical-text">Çalışanın İdeal Kapasitesi</div></th>
+            <th><div class="vertical-text">Çalışanın Mevcut Kapasitesi</div></th>
+
+            <th>
+                <div class="rotated-header" onclick="moveOrganizationHeader(this)">Organizasyon Ekle</div>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- İdeal kapasite satırı -->
+        <tr>
+            <th class="corner-cell four-merged-cell" colspan="4"></th>
+            <td class="row-header">İdeal Kurumsal Kapasitesi</td>
+            <td class="empty-cell"></td>
+            <td class="empty-cell"></td>
+            <td class="empty-cell">
+                <input class="capacity-input ideal" type="number" placeholder="0" min="0" max="100">
+            </td>
+        </tr>
+
+        <!-- Mevcut kapasite -->
+        <tr>
+            <td class="corner-cell four-merged-cell" colspan="4"></td>
+            <td class="row-header">Mevcut Kurumsal Kapasitesi</td>
+            <td class="empty-cell"></td>
+            <td class="empty-cell"></td>
+            <td class="empty-cell">
+                <input class="capacity-input mevcut" type="number" disabled placeholder="0" min="0" max="100">
+            </td>
+        </tr>
+
+        <!-- Kişi bilgileri -->
+        <tr>
+            <td class="sira-cell">Sıra</td>
+            <td class="sirket-cell">Şirket Ad</td>
+            <td class=" unvan-cell">Unvan</td>
+            <th class="sicil-cell">Sicil No</th>
+            <td class="row-header">Ad Soyad</td>
+            <td class="empty-cell"></td>
+            <td class="empty-cell"></td>
+            <td class="empty-cell" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;"></td>
+        </tr>
+    </tbody>
+</table>
+
+         </div>
+        
+         
+     <!-- Temel Beceriler Modal -->
+<div id="temelBecerilerModal" class="modal-content" style="
+    width: 500px;
+    max-width: 90%;
+     background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);
+    border: none;
+    border-radius: 20px;
+    padding: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+   
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    z-index: 9999;
+    cursor: default;
+    display: none;
+    overflow: hidden;
+">
+
+    <!-- Form -->
+    <div id="temelBecerilerForm" style="position: relative;">
+        <!-- Kapat Tuşu -->
+        <button id="closeTemelBecerilerBtn" type="button" onclick="closeTemelBecerilerModal()" style="
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        " title="Kapat" onmouseover="this.style.background='rgba(255,255,255,0.3)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">&times;</button>
+
+        <div id="temelBecerilerHeader" class="modal-header" style="background: rgba(255,255,255,0.1);backdrop-filter: blur(10px);padding: 25px 30px 20px 30px; border-bottom: 1px solid rgba(255,255,255,0.2);">
+                <h3 style="margin: 0; color: white; font-size: 24px; font-weight: 600; display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-star" style="color: #FFD700; font-size: 28px;"></i>Temel Beceriler</h3>
+            <p style="margin: 8px 0 0 0; color: rgba(255,255,255,0.8); font-size: 14px;">Kişinin sahip olması gereken temel becerileri seçin</p>
+        </div>
+
+        <!-- İçerik Alanı -->
+        <div style="background: white; padding: 30px;">
+            <!-- Loading Durumu -->
+            <div id="temelBecerilerLoading" style="text-align: center; padding: 40px 20px; color: #666; display: none;">
+                <div style="
+                    width: 60px;
+                    height: 60px;
+                    border: 4px solid #f3f3f3;
+                    border-top: 4px solid #667eea;
+                    border-radius: 50%;
+                    animation: spin 1s linear infinite;
+                    margin: 0 auto 20px auto;
+                "></div>
+                <p style="font-size: 16px; color: #333; margin: 0;">Temel beceriler yükleniyor...</p>
+            </div>
+
+            <!-- İçerik -->
+            <div id="temelBecerilerContent" style="display: none;">
+                <div style="
+                    background: #f8f9fa;
+                    border-radius: 15px;
+                    padding: 20px;
+                    margin-bottom: 25px;
+                    border: 1px solid #e9ecef;
+                ">
+                    <table style="width: 100%; border-collapse: separate; border-spacing: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                        <thead>
+                            <tr style=" background: linear-gradient(135deg, #29588C 0%, #29588C 70%, #A9A9A9 100%);">
+                                <th style="padding: 15px; text-align: left; font-weight: 600; color: white; font-size: 16px; border: none;">
+                                    <i class="fas fa-list-ul" style="margin-right: 8px;"></i>Temel Beceriler
+                                </th>
+                                <th style="padding: 15px; text-align: center; font-weight: 600; color: white; font-size: 16px; border: none; width: 120px;">
+                                    <i class="fas fa-info-circle" style="margin-right: 8px;"></i>Durum
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="temelBecerilerTableBody" style="background: white;">
+                            <!-- Dinamik olarak doldurulacak -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Boş Durum -->
+            <div id="temelBecerilerEmpty" style="text-align: center; padding: 40px 20px; color: #666; display: none;">
+                <div style="
+                    width: 80px;
+                    height: 80px;
+                    background: #f8f9fa;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin: 0 auto 20px auto;
+                    border: 2px dashed #dee2e6;
+                ">
+                    <i class="fas fa-info-circle" style="font-size: 32px; color: #6c757d;"></i>
+                </div>
+                <h4 style="color: #333; margin: 0 0 10px 0; font-size: 18px;">Henüz Beceri Tanımlanmamış</h4>
+                <p style="color: #6c757d; margin: 0; font-size: 14px;">Bu organizasyon için henüz temel beceri tanımlanmamış.</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Organizasyon Düzenleme Modal -->
+<div id="organizationModal" class="modal-content" style="
+    width: 500px;
+    max-width: 90%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 9999;
+    cursor: default;
+    display: none;
+">
+
+    <!-- Form -->
+    <form id="organizationForm" style="position: relative;">
+
+        <!-- Kapat Tuşu -->
+        <button id="closeOrganizationModalBtn" type="button" onclick="closeOrganizationModal()" style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+        " title="Kapat">&times;</button>
+
+        <!-- Sürüklenebilir Başlık -->
+        <div id="organizationModalHeader" class="modal-header" style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        ">
+        </div>
+        <h2 style="margin-bottom: 10px; color: #333;">
+                <i class="fas fa-star"></i> Temel Beceri
+            </h2>
+        <input type="hidden" id="organizationId" name="organization_id">
+
+        <!-- Ders (Organizasyon Adı) -->
+        <div style="margin-bottom: 20px;">
+            <label for="organizationName" style="display: block; margin-bottom: 5px; font-weight: bold;">Çoklu Beceri:</label>
+            <input type="text" id="organizationName" name="organization_name" required 
+                   style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;"
+                   placeholder="Organizasyon adını değiştirin...">
+        </div>
+
+        <!-- Temel Beceri -->
+        <div style="margin-bottom: 20px;">
+            
+            
+            <!-- Mevcut Beceriler Listesi -->
+            <div id="existingSkills" style="margin-bottom: 15px;">
+                <!-- Mevcut beceriler buraya yüklenecek -->
+            </div>
+
+            <!-- Yeni Beceri Ekleme -->
+            <div style="border: 1px solid #ddd; border-radius: 4px; padding: 15px; background: #f9f9f9;">
+                <h5 style="margin-bottom: 10px; color: #666;">Temel Beceri Dersleri:</h5>
+                
+                <div style="margin-bottom: 10px;">
+                    <label for="newSkillName" style="display: block; margin-bottom: 5px; font-size: 14px;">Beceri Adı:</label>
+                    <div class="autocomplete-container">
+                        <input type="text" id="newSkillName" placeholder="Temel beceri dersini girin..." 
+                               style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 3px; font-size: 14px; text-transform: uppercase;">
+                        <div id="skillAutocompleteDropdown" class="autocomplete-dropdown"></div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 10px;">
+                    <label for="newSkillDescription"  required style="display: block; margin-bottom: 5px; font-size: 14px;">Açıklama (Zorunlu):</label>
+                    <textarea id="newSkillDescription" placeholder="Temel Beceri açıklaması..." rows="3"
+                              style="width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 3px; font-size: 14px; resize: vertical;"></textarea>
+                </div>
+                
+                <button type="button" onclick="addNewSkill()" style="
+                    background: #28a745;
+                    color: white;
+                    border: none;
+                    padding: 8px 15px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                ">
+                    <i class="fas fa-plus"></i> Temel Beceri Ekle
+                </button>
+            </div>
+        </div>
+
+        <!-- Butonlar -->
+        <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 20px;">
+            <button type="button" onclick="deleteOrganization()" style="
+                background: #dc3545;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+            ">
+                <i class="fas fa-trash"></i> Organizasyonu Sil
+            </button>
+            
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="closeOrganizationModal()" style="
+                    background: #6c757d;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                ">
+                    <i class="fas fa-times"></i> İptal
+                </button>
+                
+                <button type="button" onclick="save_button()" style="
+                    background: #007bff;
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 14px;
+                ">
+                    <i class="fas fa-save"></i> Kaydet
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+    <!-- Taşınabilir Küçük Modal -->
+<div id="editEventModal" class="modal-content" style="
+    width: 400px;
+    max-width: 90%;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 9999;
+    cursor: default;
+    display: none;
+">
+
+    <!-- Form -->
+    <form id="editEventForm" style="position: relative; ">
+
+        <!-- Kapat Tuşu (Artık formun içinde) -->
+        <button id="closePanelBtn" type="button" onclick="closeEditPanel()" style="
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            font-weight: bold;
+            line-height: 1;
+        " title="Kapat">&times;</button>
+
+        <!-- Sürüklenebilir Başlık -->
+        <div id="modalHeader" class="modal-header" style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: move;
+        ">
+            <h3 style="margin: 0;"><i class="fas fa-edit"></i> Etkinlik Düzenle</h3>
+        </div>
+
+        <input type="hidden" id="editEventId" name="event_id">
+
+        <!-- Çoklu Beceri -->
+        <div style="margin-bottom: 20px;">
+            <h4>Çoklu Beceri</h4>
+            <h5 style="display: flex; align-items: center; gap: 5px;">
+                <span>Ders:</span>
+                <span id="multiSkillLessonName" style="font-weight: normal;"></span>
+            </h5>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="multiSkillDate">Tarih:</label>
+                <input type="date" id="multiSkillDate" name="multi_skill_date" required style="width: 100%; padding: 6px;">
+            </div>
+
+            <div class="form-group"  style="margin-bottom: 10px;">
+                <label for="multiSkillDescription">Açıklama (Zorunlu):</label>
+                <textarea id="multiSkillDescription" name="multi_skill_description" required rows="2" placeholder="Çoklu Beceri Açıklaması..." style="width: 100%; padding: 6px;"></textarea>
+            </div>
+        </div>
+
+        <!-- Temel Beceri -->
+        <div style="margin-bottom: 20px;">
+            <h4>Temel Beceri</h4>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="editEventSubject">Ders:</label>
+                <div id="subjectContainer" style="width: 100%;">
+                    <select id="editEventSubject" name="subject_id" required style="width: 100%; padding: 6px; display: block;">
+                        <option value="">Ders seçin...</option>
+                    </select>
+                    <input type="text" id="customSubjectInput" name="custom_subject" placeholder="Ders adını yazın..." 
+                           style="width: 100%; padding: 6px; display: none; border: 1px solid #ccc; border-radius: 4px;">
+                    <button type="button" id="addCustomSubjectBtn" onclick="addCustomSubject()" 
+                            style="margin-top: 5px; padding: 4px 8px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; display: none;">
+                        Özel Ders Ekle
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="editEventDate">Tarih:</label>
+                <input type="date" id="editEventDate" name="event_date" required style="width: 100%; padding: 6px;">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="editEventDescription">Açıklama (Zorunlu):</label>
+                <textarea id="editEventDescription" name="description" rows="2" required placeholder="Temel Beceri Açıklaması..." style="width: 100%; padding: 6px;"></textarea>
+            </div>
+        </div>
+
+        <!-- Butonlar -->
+        <div class="form-actions" style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+            <button type="button" class="custom-button custom-danger" onclick="deleteEvent()">
+                <i class="fas fa-trash"></i> Etkinliği Sil
+            </button>
+            <button type="button" class="custom-button custom-secondary" onclick="closeEditPanel()">İptal</button>
+            <button type="submit" class="custom-button custom-primary">Kaydet</button>
+        </div>
+    </form>
+    </div>
+     
+<div id="notification-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000;"></div>
+<div class="legend-card">
+  <h3>Yetkinlik Düzeyi</h3>
+  <ul>
+    <li>
+      <span class="legend-dot active-4"></span>
+      <img src="pie (6).png" alt=""> - Eğitim Verebilir
+    </li>
+    <li>
+      <span class="legend-dot active-3"></span>
+      <img src="pie (5).png" alt="">  - Gözetim Olmaksızın Uygulayabilir
+    </li>
+    <li>
+      <span class="legend-dot active-2"></span>
+      <img src="pie (4).png" alt="">  - Gözetim Altında Uygulayabilir
+    </li>
+    <li>
+      <span class="legend-dot active-1"></span>
+      <img src="pie (3).png" alt=""> - Teorik Bilgisi Var
+    </li>
+    <li>
+      <span class="legend-dot active-0"></span>
+      <img src="pie (2).png" alt="">  - Bilgisi Yok
+    </li>
+  </ul>
+  
+</div>
+</div>
+<style>
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOut {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Checkbox stilleri */
+#temelBecerilerTableBody input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #667eea;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    appearance: none;
+    background: white;
+}
+
+#temelBecerilerTableBody input[type="checkbox"]:checked {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+#temelBecerilerTableBody input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#temelBecerilerTableBody input[type="checkbox"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+
+
+#cokluBeceriTableBody input[type="checkbox"]:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(39, 174, 96, 0.3);
+}
+
+/* Tablo satır stilleri */
+#temelBecerilerTableBody tr {
+    transition: all 0.3s ease;
+}
+
+#temelBecerilerTableBody tr:hover {
+    background: #f8f9fa;
+    transform: translateX(5px);
+}
+
+#temelBecerilerTableBody td {
+    padding: 15px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 14px;
+}
+
+#temelBecerilerTableBody td:first-child {
+    font-weight: 500;
+    color: #333;
+}
+
+#temelBecerilerTableBody td:last-child {
+    text-align: center;
+}
+
+
+
+/* Planlandı durumu için özel stil */
+#temelBecerilerTableBody .planned-status {
+    color: #021f75;
+    font-weight: 600;
+    font-size: 13px;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 6px 12px;
+    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Modal animasyonları */
+#temelBecerilerModal {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+#cokluBeceriModal {
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Buton hover efektleri */
+.custom-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+
+
+/* Loading animasyonu */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+/* Autocomplete Dropdown Stilleri */
+.autocomplete-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.autocomplete-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10000;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+}
+
+.autocomplete-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.highlighted {
+    background-color: #f8f9fa;
+}
+
+.autocomplete-item-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.autocomplete-item-desc {
+    font-size: 12px;
+    color: #666;
+    margin: 0;
+}
+
+.autocomplete-no-results {
+    padding: 10px 12px;
+    color: #999;
+    font-style: italic;
+    text-align: center;
+}
+
+/* Autocomplete input focus state */
+.autocomplete-container input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+</style>
+<script src="dashboard.js?v=1234567890"></script>
+
+<script>
+ // Form gönderildiğinde (submit) çalışacak olay dinleyicisi
+document.getElementById('editEventForm').addEventListener('submit', function(event) {
+    
+    event.preventDefault(); // Sayfanın yenilenmesini engelle
+
+    showSuccessNotification('Değişiklikler kaydedildi!'); // Başarılı işlem bildirimi göster
+
+    // Form panelini gizle (örneğin, editPanel adındaki div)
+    const panel = document.getElementById('editPanel');
+    if (panel) {
+        panel.style.display = 'none';
+    }
+});
+</script>
+
+<script>
+    function closeEditPanel() {
+        const modal = document.getElementById("editEventModal");
+        modal.style.display = "none"; // veya modal.classList.add("hidden") gibi bir CSS sınıfı da olabilir
+    }
+
+   
+
+     function goToEgitimSayfasi() {
+         // Tıklanan resmin bulunduğu satırdaki kişiyi al
+         const clickedPerson = getClickedPerson();
+         
+         // Organizasyon adını al
+         const clickedOrganization = getClickedOrganization();
+         
+         if (clickedPerson && clickedOrganization) {
+             // Veritabanından bu kişi ve organizasyon için planlanan becerileri al
+             fetch('api/get_planned_skills.php')
+                 .then(response => response.json())
+                 .then(data => {
+                     if (data.success) {
+                         const plannedSkills = data.planned_skills.filter(ps => 
+                             ps.person_name === clickedPerson && 
+                             ps.organization_name === clickedOrganization
+                         );
+                         
+                         if (plannedSkills.length > 0) {
+                             // Planlanan becerileri al
+                             const skillNames = plannedSkills.map(ps => ps.skill_name);
+                             
+                             // Eğitim planı sayfasına geç
+                             egitimPlaniSayfasinaGec(skillNames, clickedPerson);
+                             
+                             // Modalı kapat
+                             closeTemelBecerilerModal();
+                             
+                             showSuccessNotification('Eğitim sayfasına yönlendiriliyorsunuz...');
+                         } else {
+                             showSuccessNotification('Bu kişi için henüz planlanan beceri bulunmuyor. Önce beceri seçin ve kaydedin.', 'warning');
+                         }
+                     } else {
+                         showSuccessNotification('Beceri bilgileri yüklenirken hata oluştu', 'error');
+                     }
+                 })
+                 .catch(error => {
+                     console.error('❌ Beceri yükleme hatası:', error);
+                     showSuccessNotification('Beceri bilgileri yüklenirken hata oluştu', 'error');
+                 });
+         } else {
+             showSuccessNotification('Kişi veya organizasyon bilgisi bulunamadı', 'error');
+         }
+     }
+
+        function getClickedOrganization() {
+    if (clickedOrganizationGlobal) {
+        console.log('✅ Global organizasyon adı kullanılıyor:', clickedOrganizationGlobal);
+        return clickedOrganizationGlobal;
+    }
+
+    const modal = document.getElementById("temelBecerilerModal");
+    const imgElement = modal.currentImg;
+
+    if (!imgElement) {
+        console.error('❌ Tıklanan resim bulunamadı');
+        return null;
+    }
+
+    const cell = imgElement.closest('td');
+    const row = cell.parentElement;
+    const table = row.closest('table');
+    console.log('📊 Resmin bulunduğu sütun indexi (row):', Array.from(row.children).indexOf(cell));
+    const colIndex = Array.from(row.children).indexOf(cell) ; 
+    
+    console.log('📊 Düzeltme sonrası colIndex:', colIndex);
+
+    const headerText = getColumnHeaderTextByIndex(table, colIndex);
+    console.log('📊 Organizasyon başlığı (headerText):', headerText);
+    if (headerText) {
+        console.log('✅ Tıklanan organizasyon:', headerText);
+        return headerText;
+    }
+
+    console.error('❌ Organizasyon adı bulunamadı');
+    return null;
+}
+
+function getColumnHeaderTextByIndex(tableElement, colIndex) {
+    const thead = tableElement.querySelector('thead');
+    if (!thead) return null;
+    const headerRow = thead.querySelector('tr');
+    if (!headerRow) return null;
+
+    let realIndex = 0;
+    for (const th of headerRow.children) {
+        const colspan = th.getAttribute('colspan') ? parseInt(th.getAttribute('colspan')) : 1;
+        if (realIndex <= colIndex && colIndex < realIndex + colspan) {
+            // button varsa içeriğini al
+            const button = th.querySelector('button.organization-button');
+            if (button) return button.textContent.trim();
+            return th.textContent.trim();
+        }
+        realIndex += colspan;
+    }
+    return null;
+}
+
+
+
+     // Global değişken olarak tıklanan organizasyonu sakla
+     let clickedOrganizationGlobal = null;
+
+     // Bu fonksiyonlar dashboard.js'de tanımlı, burada kaldırıldı
+
+     // Bu fonksiyon dashboard.js'de tanımlı, burada kaldırıldı
+
+         function savePlannedSkillsToDatabase(personName, organizationName, skills) {
+         return fetch('api/save_planned_skills.php', {
+             method: 'POST',
+             headers: {
+                 'Content-Type': 'application/json',
+             },
+             body: JSON.stringify({
+                 person_name: personName,
+                 organization_name: organizationName,
+                 skills: skills
+             })
+         })
+         .then(response => response.json())
+         .then(data => {
+             if (data.success) {
+                 console.log('✅ Planlanan beceriler kaydedildi:', data.message);
+                 return true;
+             } else {
+                 console.error('❌ Planlanan beceriler kaydedilemedi:', data.message);
+                 return false;
+             }
+         })
+         .catch(error => {
+             console.error('❌ Planlanan beceriler kaydetme hatası:', error);
+             return false;
+         });
+     }
+
+           function updateSkillDate(inputElement) {
+          const personName = inputElement.getAttribute('data-person');
+          const organizationName = inputElement.getAttribute('data-organization');
+          const skillName = inputElement.getAttribute('data-skill');
+          const dateType = inputElement.getAttribute('data-type');
+          const dateValue = inputElement.value;
+          
+          console.log('📅 Tarih güncelleniyor:', {
+              person: personName,
+              organization: organizationName,
+              skill: skillName,
+              type: dateType,
+              value: dateValue
+          });
+          
+          // Aynı satırdaki diğer tarih input'unu bul
+          const row = inputElement.closest('tr');
+          const startDateInput = row.querySelector('input[data-type="start"]');
+          const endDateInput = row.querySelector('input[data-type="end"]');
+          
+          const startDate = startDateInput ? startDateInput.value : '';
+          const endDate = endDateInput ? endDateInput.value : '';
+          
+          // Önce bu becerinin veritabanında olup olmadığını kontrol et
+          fetch('api/get_planned_skills.php')
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      const skillExists = data.planned_skills.some(ps => 
+                          ps.person_name === personName && 
+                          ps.organization_name === organizationName && 
+                          ps.skill_name === skillName
+                      );
+                      
+                                             // Artık API otomatik olarak kayıt yoksa oluşturuyor, sadece güncelleme yap
+                       return fetch('api/update_planned_skill_dates.php', {
+                           method: 'POST',
+                           headers: {
+                               'Content-Type': 'application/json',
+                           },
+                           body: JSON.stringify({
+                               person_name: personName,
+                               organization_name: organizationName,
+                               skill_name: skillName,
+                               start_date: startDate,
+                               end_date: endDate
+                           })
+                       });
+                  } else {
+                      throw new Error('Beceri kontrolü yapılamadı');
+                  }
+              })
+              .then(response => response.json())
+              .then(data => {
+                  if (data.success) {
+                      console.log('✅ Tarih güncellendi:', data.message);
+                      showSuccessNotification('Tarih başarıyla güncellendi');
+                  } else {
+                      console.error('❌ Tarih güncellenemedi:', data.message);
+                      showSuccessNotification('Tarih güncellenirken hata oluştu', 'error');
+                  }
+              })
+              .catch(error => {
+                  console.error('❌ Tarih güncelleme hatası:', error);
+                  showSuccessNotification('Tarih güncellenirken hata oluştu', 'error');
+              });
+      }
+
+    function getClickedPerson() {
+        // Modal'da saklanan resim elementini al
+        const modal = document.getElementById("temelBecerilerModal");
+        const imgElement = modal.currentImg;
+        
+        if (!imgElement) {
+            console.error('❌ Tıklanan resim bulunamadı');
+            return null;
+        }
+        
+        // Resmin bulunduğu hücreden satır bilgisini al
+        const cell = imgElement.closest('td');
+        const row = cell.parentElement;
+        
+        // Satırın ilk hücresindeki kişi adını al
+        const firstCell = row.querySelector('td:nth-child(5)');
+
+        if (firstCell) {
+            const personName = firstCell.textContent.trim();
+            console.log('✅ Tıklanan kişi:', personName);
+            return personName;
+        }
+        
+        console.error('❌ Kişi adı bulunamadı');
+        return null;
+    }
+
+          function egitimPlaniSayfasinaGec(selectedSkills, clickedPerson) {
+    try {
+        // Seçilen bilgileri URL parametresi olarak aktar
+        const skills = encodeURIComponent(JSON.stringify(selectedSkills));
+        const person = encodeURIComponent(JSON.stringify(clickedPerson));
+        window.location.href = 'egitim_plani.html?skills=' + skills + '&person=' + person;
+
+    } catch (error) {
+        console.error('❌ Eğitim planı sayfasına geçiş hatası:', error);
+        showSuccessNotification('Sayfa geçişinde hata oluştu', 'error');
+    }
+}
+
+
+                                                                                               function egitimPlaniTablosunuDoldur(selectedSkills, clickedPerson) {
+           const tbody = document.getElementById('egitimPlaniTbody');
+           tbody.innerHTML = ''; // Mevcut verileri temizle
+           
+           console.log('🎯 Eğitim planı oluşturuluyor...');
+           console.log('👤 Tıklanan kişi:', clickedPerson);
+           console.log('📚 Seçilen beceriler:', selectedSkills);
+           
+           // Veritabanından tüm planlanan becerileri yükle
+           loadAllPlannedSkills(tbody, selectedSkills, clickedPerson);
+      }
+
+      function loadAllPlannedSkills(tbody, selectedSkills, clickedPerson) {
+          fetch('api/get_planned_skills.php')
+              .then(response => response.json())
+                             .then(data => {
+                   if (data.success) {
+                       console.log('📋 Veritabanından planlanan beceriler yüklendi:', data.planned_skills);
+                       
+                                               // Tarih değerlerini kontrol et
+                        console.log('📋 Ham veritabanı verisi:', data.planned_skills);
+                        data.planned_skills.forEach(skill => {
+                            console.log(`📅 ${skill.person_name} - ${skill.skill_name}: start_date="${skill.start_date}" (${typeof skill.start_date}), end_date="${skill.end_date}" (${typeof skill.end_date})`);
+                        });
+                       
+                       // Tüm planlanan becerileri tabloya ekle
+                       displayAllPlannedSkills(tbody, data.planned_skills, selectedSkills, clickedPerson);
+                  } else {
+                      console.error('❌ Planlanan beceriler yüklenemedi:', data.message);
+                      // Hata durumunda sadece yeni seçilen becerileri göster
+                      displaySelectedSkillsOnly(tbody, selectedSkills, clickedPerson);
+                  }
+              })
+              .catch(error => {
+                  console.error('❌ Planlanan beceriler yükleme hatası:', error);
+                  // Hata durumunda sadece yeni seçilen becerileri göster
+                  displaySelectedSkillsOnly(tbody, selectedSkills, clickedPerson);
+              });
+      }
+
+             function displayAllPlannedSkills(tbody, plannedSkills, selectedSkills, clickedPerson) {
+           let rowIndex = 1;
+           
+                       // Önce veritabanındaki tüm planlanan becerileri göster
+            plannedSkills.forEach((plannedSkill, index) => {
+                const row = document.createElement('tr');
+                
+                // Sicil No
+                const sicilNo = rowIndex.toString().padStart(3, '0');
+                
+                                // Tarih değerlerini kontrol et - null, undefined ve "null" string'ini kontrol et
+                let startDate = '';
+                let endDate = '';
+                
+                // start_date kontrolü
+                if (plannedSkill.start_date && 
+                    plannedSkill.start_date !== null && 
+                    plannedSkill.start_date !== undefined && 
+                    plannedSkill.start_date !== 'null' && 
+                    plannedSkill.start_date !== 'undefined' && 
+                    plannedSkill.start_date !== '' && 
+                    plannedSkill.start_date.trim() !== '') {
+                    startDate = plannedSkill.start_date;
+                }
+                
+                // end_date kontrolü
+                if (plannedSkill.end_date && 
+                    plannedSkill.end_date !== null && 
+                    plannedSkill.end_date !== undefined && 
+                    plannedSkill.end_date !== 'null' && 
+                    plannedSkill.end_date !== 'undefined' && 
+                    plannedSkill.end_date !== '' && 
+                    plannedSkill.end_date.trim() !== '') {
+                    endDate = plannedSkill.end_date;
+                }
+                
+                // Tarih değerlerini debug için logla
+                console.log(`🔍 Satır ${rowIndex}: ${plannedSkill.person_name} - ${plannedSkill.skill_name}`);
+                console.log(`   Raw Start Date: ${plannedSkill.start_date} (type: ${typeof plannedSkill.start_date})`);
+                console.log(`   Raw End Date: ${plannedSkill.end_date} (type: ${typeof plannedSkill.end_date})`);
+                console.log(`   Final Start Date: "${startDate}" (type: ${typeof startDate})`);
+                console.log(`   Final End Date: "${endDate}" (type: ${typeof endDate})`);
+                
+                row.innerHTML = `
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${sicilNo}</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${plannedSkill.person_name}</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${plannedSkill.skill_name.trim()}</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                        <input type="date" value="${startDate}" 
+                               data-person="${plannedSkill.person_name}" 
+                               data-organization="${plannedSkill.organization_name}" 
+                               data-skill="${plannedSkill.skill_name}" 
+                               data-type="start"
+                               onchange="updateSkillDate(this)" 
+                               style="padding: 4px; border: 1px solid #ccc; border-radius: 4px; width: 120px;">
+                    </td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                        <input type="date" value="${endDate}" 
+                               data-person="${plannedSkill.person_name}" 
+                               data-organization="${plannedSkill.organization_name}" 
+                               data-skill="${plannedSkill.skill_name}" 
+                               data-type="end"
+                               onchange="updateSkillDate(this)" 
+                               style="padding: 4px; border: 1px solid #ccc; border-radius: 4px; width: 120px;">
+                    </td>
+                   <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                       <div style="display: flex; justify-content: center; align-items: center;">
+                           <button type="button" class="durum-kutusu" style="
+                               width: 30px; height: 30px; border: 2px solid #007bff; background: white; 
+                               border-radius: 4px; cursor: pointer; font-weight: bold; color: #007bff;
+                               display: flex; align-items: center; justify-content: center;
+                               font-size: 16px;
+                           " title="Durum Seç"> </button>
+                       </div>
+                   </td>
+               `;
+               
+               tbody.appendChild(row);
+               rowIndex++;
+           });
+          
+                     // Yeni seçilen becerileri de ekle (eğer henüz veritabanında yoksa)
+           if (selectedSkills && clickedPerson) {
+               selectedSkills.forEach((skill) => {
+                   // Bu beceri zaten veritabanında var mı kontrol et (tüm kişiler için)
+                   const alreadyExists = plannedSkills.some(ps => 
+                       ps.person_name === clickedPerson && ps.skill_name === skill
+                   );
+                   
+                   if (!alreadyExists) {
+                       const row = document.createElement('tr');
+                       const sicilNo = rowIndex.toString().padStart(3, '0');
+                       
+                       // Organizasyon adını al
+                       const clickedOrganization = getClickedOrganization();
+                       
+                       row.innerHTML = `
+                           <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${sicilNo}</td>
+                           <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${clickedPerson}</td>
+                           <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${skill.trim()}</td>
+                           <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                               <input type="date" 
+                                      data-person="${clickedPerson}" 
+                                      data-organization="${clickedOrganization}" 
+                                      data-skill="${skill.trim()}" 
+                                      data-type="start"
+                                      onchange="updateSkillDate(this)" 
+                                      style="padding: 4px; border: 1px solid #ccc; border-radius: 4px; width: 120px;">
+                           </td>
+                           <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                               <input type="date" 
+                                      data-person="${clickedPerson}" 
+                                      data-organization="${clickedOrganization}" 
+                                      data-skill="${skill.trim()}" 
+                                      data-type="end"
+                                      onchange="updateSkillDate(this)" 
+                                      style="padding: 4px; border: 1px solid #ccc; border-radius: 4px; width: 120px;">
+                           </td>
+                           <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                               <div style="display: flex; justify-content: center; align-items: center;">
+                                   <button type="button" class="durum-kutusu" style="
+                                       width: 30px; height: 30px; border: 2px solid #007bff; background: white; 
+                                       border-radius: 4px; cursor: pointer; font-weight: bold; color: #007bff;
+                                       display: flex; align-items: center; justify-content: center;
+                                       font-size: 16px;
+                                   " title="Durum Seç"> </button>
+                               </div>
+                           </td>
+                       `;
+                       
+                       tbody.appendChild(row);
+                       rowIndex++;
+                   }
+               });
+           }
+          
+          // Durum kutucukları için event listener'ları ekle
+          document.querySelectorAll('.durum-kutusu').forEach(button => {
+              button.addEventListener('click', function() {
+                  // Eğer kutucuk boşsa + işareti ekle
+                  if (this.textContent.trim() === '') {
+                      this.textContent = '+';
+                      this.style.background = '#007bff';
+                      this.style.color = 'white';
+                  } else {
+                      // Eğer + işareti varsa boşalt
+                      this.textContent = ' ';
+                      this.style.background = 'white';
+                      this.style.color = '#007bff';
+                  }
+              });
+          });
+          
+          console.log('✅ Tüm planlanan beceriler tabloya eklendi');
+      }
+
+             function displaySelectedSkillsOnly(tbody, selectedSkills, clickedPerson) {
+           // Hata durumunda sadece yeni seçilen becerileri göster
+           if (clickedPerson && selectedSkills) {
+               selectedSkills.forEach((skill, index) => {
+                   const row = document.createElement('tr');
+                   const sicilNo = (index + 1).toString().padStart(3, '0');
+                   
+                   // Organizasyon adını al
+                   const clickedOrganization = getClickedOrganization();
+                   
+                   row.innerHTML = `
+                       <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${sicilNo}</td>
+                       <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${clickedPerson}</td>
+                       <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">${skill.trim()}</td>
+                       <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                           <input type="date" 
+                                  data-person="${clickedPerson}" 
+                                  data-organization="${clickedOrganization}" 
+                                  data-skill="${skill.trim()}" 
+                                  data-type="start"
+                                  onchange="updateSkillDate(this)" 
+                                  style="padding: 4px; border: 1px solid #ccc; border-radius: 4px; width: 120px;">
+                       </td>
+                       <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                           <input type="date" 
+                                  data-person="${clickedPerson}" 
+                                  data-organization="${clickedOrganization}" 
+                                  data-skill="${skill.trim()}" 
+                                  data-type="end"
+                                  onchange="updateSkillDate(this)" 
+                                  style="padding: 4px; border: 1px solid #ccc; border-radius: 4px; width: 120px;">
+                       </td>
+                       <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">
+                           <div style="display: flex; justify-content: center; align-items: center;">
+                               <button type="button" class="durum-kutusu" style="
+                                   width: 30px; height: 30px; border: 2px solid #007bff; background: white; 
+                                   border-radius: 4px; cursor: pointer; font-weight: bold; color: #007bff;
+                                   display: flex; align-items: center; justify-content: center;
+                                   font-size: 16px;
+                               " title="Durum Seç"> </button>
+                           </div>
+                       </td>
+                   `;
+                   
+                   tbody.appendChild(row);
+               });
+           }
+          
+          // Durum kutucukları için event listener'ları ekle
+          document.querySelectorAll('.durum-kutusu').forEach(button => {
+              button.addEventListener('click', function() {
+                  if (this.textContent.trim() === '') {
+                      this.textContent = '+';
+                      this.style.background = '#007bff';
+                      this.style.color = 'white';
+                  } else {
+                      this.textContent = ' ';
+                      this.style.background = 'white';
+                      this.style.color = '#007bff';
+                  }
+              });
+          });
+      }
+
+                                                                                                                 function geriDonAnaSayfa() {
+              // Tüm tarih alanlarını kontrol et ve kaydet
+              const tarihAlanlari = document.querySelectorAll('#egitimPlaniTbody input[type="date"]');
+              let bosTarihVar = false;
+              let kaydedilecekTarihler = [];
+              
+              tarihAlanlari.forEach(input => {
+                  if (!input.value || input.value.trim() === '') {
+                      bosTarihVar = true;
+                  } else {
+                      // Dolu tarih alanlarını kaydetmek için hazırla
+                      const personName = input.getAttribute('data-person');
+                      const organizationName = input.getAttribute('data-organization');
+                      const skillName = input.getAttribute('data-skill');
+                      const dateType = input.getAttribute('data-type');
+                      
+                      if (personName && organizationName && skillName) {
+                          kaydedilecekTarihler.push({
+                              person: personName,
+                              organization: organizationName,
+                              skill: skillName,
+                              type: dateType,
+                              value: input.value
+                          });
+                      }
+                  }
+              });
+              
+                             // Eğer boş tarih alanı varsa uyarı ver ve geri dönme
+               if (bosTarihVar) {
+                   showSuccessNotification('Lütfen tüm eğitim başlangıç ve bitiş tarihlerini doldurun!', 'warning');
+                   return;
+               }
+               
+               // Tarih kaydetme işlemini başlat
+               console.log('📅 Tarihler kaydediliyor:', kaydedilecekTarihler.length, 'tarih');
+              
+              // Tüm tarihleri veritabanına kaydet
+              if (kaydedilecekTarihler.length > 0) {
+                  console.log('📅 Tarihler kaydediliyor:', kaydedilecekTarihler);
+                  
+                                                         // Her tarih için ayrı ayrı kaydet
+                    const kaydetmePromisleri = kaydedilecekTarihler.map(tarih => {
+                        // Aynı satırdaki diğer tarih input'unu bul - selector'ı güvenli hale getir
+                        const safePerson = tarih.person.replace(/"/g, '\\"');
+                        const safeOrganization = tarih.organization.replace(/"/g, '\\"');
+                        const safeSkill = tarih.skill.replace(/"/g, '\\"').replace(/\s+/g, ' ').trim();
+                        
+                        // Önce tüm input'ları bul ve eşleşen olanı bul
+                        const allInputs = document.querySelectorAll('input[data-person][data-organization][data-skill]');
+                        let targetInput = null;
+                        
+                        for (let input of allInputs) {
+                            const inputPerson = input.getAttribute('data-person');
+                            const inputOrganization = input.getAttribute('data-organization');
+                            const inputSkill = input.getAttribute('data-skill').replace(/\s+/g, ' ').trim();
+                            
+                            if (inputPerson === safePerson && 
+                                inputOrganization === safeOrganization && 
+                                inputSkill === safeSkill) {
+                                targetInput = input;
+                                break;
+                            }
+                        }
+                        
+                        if (!targetInput) {
+                            console.error('❌ Eşleşen input bulunamadı:', { person: safePerson, organization: safeOrganization, skill: safeSkill });
+                            return Promise.resolve(false);
+                        }
+                        
+                        const row = targetInput.closest('tr');
+                        const startDateInput = row.querySelector('input[data-type="start"]');
+                        const endDateInput = row.querySelector('input[data-type="end"]');
+                       
+                       const startDate = startDateInput ? startDateInput.value : '';
+                       const endDate = endDateInput ? endDateInput.value : '';
+                       
+                       // Önce bu becerinin veritabanında olup olmadığını kontrol et
+                       return fetch('api/get_planned_skills.php')
+                           .then(response => response.json())
+                           .then(data => {
+                               if (data.success) {
+                                   const skillExists = data.planned_skills.some(ps => 
+                                       ps.person_name === tarih.person && 
+                                       ps.organization_name === tarih.organization && 
+                                       ps.skill_name === tarih.skill
+                                   );
+                                   
+                                                                       // Artık API otomatik olarak kayıt yoksa oluşturuyor, sadece güncelleme yap
+                                    return fetch('api/update_planned_skill_dates.php', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                        },
+                                        body: JSON.stringify({
+                                            person_name: tarih.person,
+                                            organization_name: tarih.organization,
+                                            skill_name: tarih.skill,
+                                            start_date: startDate,
+                                            end_date: endDate
+                                        })
+                                    });
+                               } else {
+                                   throw new Error('Beceri kontrolü yapılamadı');
+                               }
+                           })
+                                                       .then(response => response.json())
+                                                         .then(data => {
+                                 if (data.success) {
+                                     console.log('✅ Tarih kaydedildi:', tarih.person, tarih.skill, data.message);
+                                     
+                                     return true;
+                                 } else {
+                                     console.error('❌ Tarih kaydedilemedi:', data.message);
+                                     return false;
+                                 }
+                             })
+                           .catch(error => {
+                               console.error('❌ Tarih kaydetme hatası:', error);
+                               return false;
+                           });
+                   });
+                  
+                                                         // Tüm kaydetme işlemlerini bekle
+                    Promise.all(kaydetmePromisleri).then(results => {
+                        const basariliKayitlar = results.filter(result => result === true).length;
+                        console.log(`✅ ${basariliKayitlar}/${kaydedilecekTarihler.length} tarih başarıyla kaydedildi`);
+                        
+                        if (basariliKayitlar > 0) {
+                            showSuccessNotification(`${basariliKayitlar} tarih başarıyla kaydedildi`);
+                        } else if (kaydedilecekTarihler.length > 0) {
+                            showSuccessNotification('Tarih kaydetme işlemi tamamlandı, ancak bazı kayıtlar güncellenemedi', 'warning');
+                        }
+                        
+                        // Tarih kaydetme işlemi tamamlandıktan sonra ana sayfaya dön
+                        setTimeout(() => {
+                            goBackToMainPage();
+                        }, 1000);
+                    }).catch(error => {
+                        console.error('❌ Tarih kaydetme hatası:', error);
+                        showSuccessNotification('Tarih kaydetme işleminde hata oluştu', 'error');
+                        // Hata olsa bile ana sayfaya dön
+                        setTimeout(() => {
+                            goBackToMainPage();
+                        }, 1000);
+                    });
+                             } else {
+                   // Tarih kaydedilecek bir şey yoksa direkt ana sayfaya dön
+                   goBackToMainPage();
+               }
+               
+               // Hücre sarı yapma özelliği kaldırıldı - kullanıcı isteği üzerine
+           }
+           
+           // Ana sayfaya dönme fonksiyonu
+           function goBackToMainPage() {
+               try {
+                   // Eğitim planı sayfasını gizle
+                   const egitimPlaniSayfasi = document.getElementById('egitimPlaniSayfasi');
+                   if (egitimPlaniSayfasi) {
+                       egitimPlaniSayfasi.style.display = 'none';
+                   }
+                   
+                   // Ana sayfayı göster
+                   const container = document.querySelector('.container');
+                   if (container) {
+                       container.style.display = 'block';
+                   }
+                   
+                   const legendCard = document.querySelector('.legend-card');
+                   if (legendCard) {
+                       legendCard.style.display = 'block';
+                   }
+                   
+                   // Filtreleme bölümünü tekrar göster
+                   const filterSection = document.querySelector('[style*="background: #f8f9fa; padding: 15px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"]');
+                   if (filterSection) {
+                       filterSection.style.display = 'block';
+                   }
+                   
+                   // Global değişkeni temizle
+                   clickedOrganizationGlobal = null;
+                   
+                   console.log('✅ Ana sayfaya başarıyla dönüldü');
+               } catch (error) {
+                   console.error('❌ Ana sayfaya dönüş hatası:', error);
+                   // Hata durumunda sayfayı yenile
+                   window.location.reload();
+               }
+           }
+
+    
+     // Filtreleme ve Arama Fonksiyonları
+     let allPersons = []; // Tüm kişileri saklamak için
+     let allOrganizations = []; // Tüm organizasyonları saklamak için
+     
+     // Sayfa yüklendiğinde filtreleme sistemini başlat
+     document.addEventListener('DOMContentLoaded', function() {
+         // İsim arama input'una event listener ekle (eğer varsa)
+         const nameSearchElement = document.getElementById('nameSearch');
+         if (nameSearchElement) {
+             nameSearchElement.addEventListener('input', filterTable);
+         }
+         
+         // Organizasyon filtresi select'ine event listener ekle (eğer varsa)
+         const organizationFilterElement = document.getElementById('organizationFilter');
+         if (organizationFilterElement) {
+             organizationFilterElement.addEventListener('change', filterTable);
+         }
+         
+         // Organizasyonları yükle ve filtreleme select'ini doldur
+         loadOrganizationsForFilter();
+     });
+     
+     // Organizasyonları filtreleme select'i için yükle
+     function loadOrganizationsForFilter() {
+         fetch('api/get_organizations.php')
+             .then(response => response.json())
+             .then(data => {
+                 if (data.success) {
+                     allOrganizations = data.organizations;
+                     populateOrganizationFilter();
+                 }
+             })
+             .catch(error => {
+                 console.error('❌ Organizasyonlar yüklenemedi:', error);
+             });
+     }
+     
+     // Organizasyon filtresi select'ini doldur
+     function populateOrganizationFilter() {
+         const select = document.getElementById('organizationFilter');
+         
+         // Element yoksa fonksiyondan çık
+         if (!select) {
+             console.log('⚠️ organizationFilter elementi bulunamadı, filtreleme devre dışı');
+             return;
+         }
+         
+         // Mevcut seçenekleri temizle (ilk seçenek hariç)
+         while (select.children.length > 1) {
+             select.removeChild(select.lastChild);
+         }
+         
+         // Organizasyonları ekle
+         allOrganizations.forEach(org => {
+             const option = document.createElement('option');
+             option.value = org.name;
+             option.textContent = org.name;
+             select.appendChild(option);
+         });
+     }
+     
+                       function filterTable() {
+    const nameSearchElement = document.getElementById('nameSearch');
+    const organizationFilterElement = document.getElementById('organizationFilter');
+    
+    const searchTerm = nameSearchElement ? nameSearchElement.value.toLowerCase() : '';
+    const selectedOrganization = organizationFilterElement ? organizationFilterElement.value : '';
+    
+    console.log('🔍 Filtreleme:', { searchTerm, selectedOrganization });
+    
+    // Organizasyon pozisyon kontrollerini göster/gizle
+    showOrganizationPositionControls(selectedOrganization);
+    
+    const table = document.querySelector('.excel-table');
+    if (!table) return;
+    
+    const headerRow = table.querySelector('thead tr');
+    if (!headerRow) return;
+    
+    // "Ad Soyad" sütununun indeksini bul
+    let nameColumnIndex = -1;
+    headerRow.querySelectorAll('th').forEach((th, idx) => {
+        if (th.textContent.trim() === 'Ad Soyad') {
+            nameColumnIndex = idx;
+        }
+    });
+    
+    if (nameColumnIndex === -1) {
+        console.warn('⚠️ "Ad Soyad" sütunu bulunamadı!');
+        return;
+    }
+    
+    // Ana tablodaki tüm satırları al
+    const mainTableRows = table.querySelectorAll('tbody tr');
+    
+    mainTableRows.forEach(row => {
+        const nameCell = row.children[nameColumnIndex];
+        if (!nameCell) return;
+        
+        const personName = nameCell.textContent.trim().toLowerCase();
+        let shouldShow = true;
+        
+        // İsim filtresi
+        if (searchTerm && !personName.includes(searchTerm)) {
+            shouldShow = false;
+        }
+        
+        // Organizasyon filtresi - sadece Ad Soyad satırları için uygula
+        if (selectedOrganization && shouldShow) {
+            if (nameCell.textContent.trim() === 'Ad Soyad' ||
+                nameCell.textContent.trim() === 'İdeal Kurumsal Kapasitesi' || 
+                nameCell.textContent.trim() === 'Mevcut Kurumsal Kapasitesi') {
+                shouldShow = true; // Bu özel satırlar her zaman görünsün
+            } else {
+                // Diğer kişi satırları için organizasyon filtresini uygula
+                const hasOrganization = checkPersonHasOrganization(row, selectedOrganization);
+                if (!hasOrganization) {
+                    shouldShow = false;
+                }
+            }
+        }
+        
+        // Satırı göster/gizle
+        row.style.display = shouldShow ? '' : 'none';
+    });
+    
+    // Sütun filtreleme - Organizasyon seçildiğinde sadece seçilen organizasyon sütunu görünsün
+    filterColumns(selectedOrganization);
+}
+
+        // Sütunları filtrele
+        function filterColumns(selectedOrganization) {
+            // Ana tablo sütunlarını filtrele
+            const mainTable = document.querySelector('.excel-table');
+            if (mainTable) {
+                const headerRow = mainTable.querySelector('thead tr');
+                const tbodyRows = mainTable.querySelectorAll('tbody tr');
+                
+                if (headerRow) {
+                    const headerCells = headerRow.children;
+                    
+                    // Eğer organizasyon seçildiyse, seçilen organizasyonu 3. sütuna taşı
+                    if (selectedOrganization) {
+                        // Seçilen organizasyonun sütununu bul
+                        let selectedColumnIndex = -1;
+                        for (let i = 6; i < headerCells.length; i++) {
+                            const headerCell = headerCells[i];
+                            const button = headerCell.querySelector('button');
+                            if (button && button.textContent.trim() === selectedOrganization) {
+                                selectedColumnIndex = i;
+                                break;
+                            }
+                        }
+                        
+                        // Eğer seçilen organizasyon bulunduysa, 8. sütuna taşı
+                        if (selectedColumnIndex !== -1 && selectedColumnIndex !== 7) {
+                            console.log(`🔄 Seçilen organizasyon "${selectedOrganization}" 8. sütuna taşınıyor...`);
+                            
+                            // Header'da sütunu taşı
+                            const selectedHeader = headerCells[selectedColumnIndex];
+                            const targetHeader = headerCells[7];
+                            
+                            // Header'ı taşı
+                            if (selectedColumnIndex > 7) {
+                                // Sağdan sola taşı
+                                headerRow.insertBefore(selectedHeader, targetHeader);
+                            } else {
+                                // Soldan sağa taşı
+                                headerRow.insertBefore(selectedHeader, targetHeader.nextSibling);
+                            }
+                            
+                            // Tüm satırlarda sütunu taşı
+                            tbodyRows.forEach(row => {
+                                const selectedCell = row.children[selectedColumnIndex];
+                                const targetCell = row.children[7];
+                                
+                                if (selectedCell && targetCell) {
+                                    if (selectedColumnIndex > 7) {
+                                        // Sağdan sola taşı
+                                        row.insertBefore(selectedCell, targetCell);
+                                    } else {
+                                        // Soldan sağa taşı
+                                        row.insertBefore(selectedCell, targetCell.nextSibling);
+                                    }
+                                }
+                            });
+                            
+                            console.log(`✅ Organizasyon "${selectedOrganization}" 8. sütuna taşındı`);
+                        }
+                    }
+                    
+                    // Her sütunu kontrol et (0: corner, 1-3:boş, 4:İdeal Kapasite, 5: Mevcut Kapasite, 6+: Organizasyonlar)
+                    for (let i = 0; i < headerCells.length; i++) {
+                        const headerCell = headerCells[i];
+                        const headerText = headerCell.textContent.trim();
+                        
+                        let shouldShowColumn = true;
+                        
+                        // Temel sütunlar her zaman görünsün (corner, İdeal Kapasite, Mevcut Kapasite)
+                        if (i <= 5) {
+                            shouldShowColumn = true;
+                        } else if (selectedOrganization) {
+                            // Organizasyon seçildiyse tüm organizasyonlar görünsün
+                            shouldShowColumn = true;
+                        }
+                        
+                        // Header'ı göster/gizle
+                        if (shouldShowColumn) {
+                            headerCell.style.visibility = '';
+                            headerCell.style.display = '';
+                        } else {
+                            headerCell.style.visibility = 'hidden';
+                            // Boyutları koru
+                            headerCell.style.width = headerCell.offsetWidth + 'px';
+                            headerCell.style.height = headerCell.offsetHeight + 'px';
+                        }
+                        
+                        // Tüm satırlardaki bu sütunu göster/gizle
+                        tbodyRows.forEach(row => {
+                            const cell = row.children[i];
+                            if (cell) {
+                                // "Ad Soyad" satırındaki hücreler her zaman görünsün
+                                const isAdSoyadRow = row.querySelector('td:first-child') && 
+                                                    row.querySelector('td:first-child').textContent.trim() === 'Ad Soyad';
+                                
+                                if (isAdSoyadRow) {
+                                    cell.style.display = ''; // Ad Soyad satırındaki hücreler her zaman görünsün
+                                } else {
+                                    // Hücreyi gizle ama boyutunu koru
+                                    if (shouldShowColumn) {
+                                        cell.style.visibility = '';
+                                        cell.style.display = '';
+                                    } else {
+                                        cell.style.visibility = 'hidden';
+                                        // Boyutları koru
+                                        cell.style.width = cell.offsetWidth + 'px';
+                                        cell.style.height = cell.offsetHeight + 'px';
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+            
+            // Arama tablosu dinamik olarak oluşturulduğu için sütun filtreleme yapmıyoruz
+            // Bu tablo dashboard.js tarafından yönetiliyor
+        }
+     
+     // Kişinin belirli bir organizasyona sahip olup olmadığını kontrol et (ana tablo)
+     function checkPersonHasOrganization(row, organizationName) {
+         const cells = row.querySelectorAll('td');
+         
+         // İlk 6 hücreyi atla (Ad Soyad, İdeal Kapasite, Mevcut Kapasite)
+         for (let i = 6; i < cells.length; i++) {
+             const cell = cells[i];
+             const button = cell.querySelector('button');
+             
+             if (button) {
+                 const img = button.querySelector('img');
+                 if (img) {
+                     // Bu hücrede resim varsa, organizasyon sütununu kontrol et
+                     const table = row.closest('table');
+                     const thead = table.querySelector('thead');
+                     if (thead) {
+                         const headerRow = thead.querySelector('tr');
+                         if (headerRow && headerRow.children[i]) {
+                             const headerText = headerRow.children[i].textContent.trim();
+                             if (headerText === organizationName) {
+                                 return true;
+                             }
+                         }
+                     }
+                 }
+             }
+         }
+         
+         return false;
+     }
+     
+           // Arama tablosu dinamik olarak oluşturulduğu için bu fonksiyon artık kullanılmıyor
+     
+           // Filtreleri temizle
+             function clearFilters() {
+           document.getElementById('nameSearch').value = '';
+           document.getElementById('organizationFilter').value = '';
+           
+           // Organizasyon pozisyon kontrollerini gizle
+           showOrganizationPositionControls('');
+           
+           // Tüm satırları göster (sadece ana tablo için)
+           const allRows = document.querySelectorAll('.excel-table tbody tr');
+           allRows.forEach(row => {
+               row.style.display = '';
+           });
+           
+           // Tüm sütunları göster
+           filterColumns('');
+           
+           showSuccessNotification('Filtreler temizlendi');
+       }
+       
+               // Organizasyon filtresi değiştiğinde pozisyon kontrollerini göster/gizle
+        function showOrganizationPositionControls(organizationName) {
+            const controls = document.getElementById('organizationPositionControls');
+            
+            if (organizationName && organizationName.trim() !== '') {
+                controls.style.display = 'block';
+            } else {
+                controls.style.display = 'none';
+            }
+        }
+ </script>
+
+<script>
+ 
+  document.addEventListener("DOMContentLoaded", function () {
+    const idealInput = document.querySelector("input.ideal");
+    const mevcutInput = document.querySelector("input.mevcut");
+
+    idealInput.addEventListener("input", function () {
+      const idealValue = parseInt(idealInput.value);
+      const mevcutValue = parseInt(mevcutInput.value);
+
+      if (!isNaN(idealValue) && !isNaN(mevcutValue) && idealValue === mevcutValue) {
+        idealInput.classList.add("match");
+      } else {
+        idealInput.classList.remove("match");
+      }
+    });
+  });
+  function gotoEvent(){
+    window.location.href = "event_form.html";
+}
+function gotoMatrix(){
+    window.location.href = "need_matrix.html";
+}
+
+</script>
+<script>// navbarın js kodlarıconst menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
+
+menuToggle.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+});
+</script>
+
+<script>
+    //sicil no unvan gibi şeylerin input kısmı
+  const table = document.querySelector('.excel-table tbody');
+
+  let editingCell = null;
+
+  table.addEventListener('click', function(e) {
+    const target = e.target;
+
+    // Başka bir yerde düzenleme varsa önce bitir
+    if (editingCell && editingCell !== target) {
+      finishEditing();
+    }
+
+    // 2., 3., 4. sütundaki hücrelere tıklanırsa düzenlemeyi başlat
+    if (target.tagName === 'TD' || target.tagName === 'TH') {
+      const cellIndex = target.cellIndex;
+      const rowIndex = target.parentElement.rowIndex;
+
+      // Başlık 4. satırda (index 3), veriler 5. satırdan (index 4) başlıyor
+      if (rowIndex > 3 && (cellIndex === 1 || cellIndex === 2 || cellIndex === 3)) {
+        startEditing(target);
+      } else {
+        finishEditing();
+      }
+    } else {
+      finishEditing();
+    }
+  });
+
+  function startEditing(cell) {
+  if (editingCell) return;
+
+  editingCell = cell;
+  const currentText = cell.innerText;
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.value = currentText;
+
+  // Başlangıçta genişliği metin uzunluğuna göre ayarla
+  adjustInputWidth(input);
+
+  // Metin değiştikçe genişliği güncelle
+  input.addEventListener('input', () => adjustInputWidth(input));
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      finishEditing();
+    }
+  });
+
+  input.addEventListener('blur', function() {
+    finishEditing();
+  });
+
+  cell.innerText = '';
+  cell.appendChild(input);
+  input.focus();
+}
+
+// Metin genişliğini ölçüp input genişliğini ayarlayan fonksiyon
+function adjustInputWidth(input) {
+  // Gizli span oluştur
+  const span = document.createElement('span');
+  span.style.visibility = 'hidden';
+  span.style.whiteSpace = 'pre';
+  span.style.font = window.getComputedStyle(input).font;
+  span.textContent = input.value || input.placeholder || '';
+  document.body.appendChild(span);
+
+  // Genişliği span genişliğine göre ayarla (min 30px, max 100%)
+  const width = span.offsetWidth + 10; // biraz padding ekle
+  input.style.width = width + 'px';
+
+  document.body.removeChild(span);
+}
+
+  
+</script>
+<script>
+  const allowedColumns = [1, 2, 3]; // 2., 3., 4. sütunlar (0-index)
+const startRowIndex = 4;          // 5. satır (0-index)
+
+table.addEventListener('click', function(e) {
+  const cell = e.target.closest('td, th'); // Gerçek hücreyi bul
+
+  // Hücre yoksa (örneğin boş alana tıklanmışsa), çık
+  if (!cell || !table.contains(cell)) {
+    finishEditing();
+    return;
+  }
+
+  // Başka bir yerde düzenleme varsa önce bitir
+  if (editingCell && editingCell !== cell) {
+    finishEditing();
+  }
+
+  const cellIndex = cell.cellIndex;
+  const rowIndex = cell.parentElement.rowIndex;
+
+  // Başlık 4. satırda (index 3), veriler 5. satırdan (index 4) başlıyor
+  if (rowIndex > 3 && (cellIndex === 1 || cellIndex === 2 || cellIndex === 3)) {
+    startEditing(cell);
+  } else {
+    finishEditing();
+  }
+});
+
+// İşte 5. satırdan başlayarak önce 2. sütun, sonra 3., sonra 4. sütun üzerinde işlem yapmak için fonksiyon:
+
+function processColumnsSequentially() {
+  const rows = Array.from(table.tBodies[0].rows);
+
+  for (let colIndex of allowedColumns) {
+    for (let rowIndex = startRowIndex; rowIndex < rows.length; rowIndex++) {
+      const cell = rows[rowIndex].cells[colIndex];
+      if (cell) {
+        // Örnek işlem: hücreyi loglamak
+        console.log(`Satır ${rowIndex + 1}, Sütun ${colIndex + 1}: ${cell.innerText}`);
+        // İstersen burada istediğin başka işlemi yapabilirsin.
+      }
+    }
+  }
+}
+
+// Fonksiyonu çağırmak için
+// processColumnsSequentially();
+
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', function () {
+    const zoomSlider = document.getElementById("zoomRange");
+    const zoomValue = document.getElementById("zoomValue");
+    const tableWrapper = document.getElementById("tableWrapper");
+
+    // Başlangıç zoom değeri: %50
+    const initialZoom = 50;
+
+    // Scale uygula
+    tableWrapper.style.transform = `scale(${initialZoom / 100})`;
+
+    // Slider güncelle
+    zoomSlider.value = initialZoom;
+    zoomValue.textContent = `${initialZoom}%`;
+  });
+
+  // Zoom slider dinleyicisi
+  const zoomSlider = document.getElementById("zoomRange");
+  const zoomValue = document.getElementById("zoomValue");
+  const tableWrapper = document.getElementById("tableWrapper");
+
+  zoomSlider.addEventListener("input", function () {
+    const scale = zoomSlider.value / 100;
+    tableWrapper.style.transform = `scale(${scale})`;
+    zoomValue.textContent = `${zoomSlider.value}%`;
+  });
+</script>
+<script>
+  function gotolesson() {
+    // Önce mevcut planlanan becerileri kontrol et
+    if (clickedPerson && clickedOrganization) {
+        fetch('api/get_planned_skills.php')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const plannedSkills = data.planned_skills.filter(ps => 
+                        ps.person_name === clickedPerson && 
+                        ps.organization_name === clickedOrganization
+                    );
+                    
+                    if (plannedSkills.length > 0) {
+                        // Planlanan becerileri al
+                        const skillNames = plannedSkills.map(ps => ps.skill_name);
+                        
+                        // Eğitim planı sayfasına geç
+                        egitimPlaniSayfasinaGec(skillNames, clickedPerson);
+                        
+                        // Modalı kapat
+                        closeTemelBecerilerModal();
+                        
+                        showSuccessNotification('Eğitim sayfasına yönlendiriliyorsunuz...');
+                    } else {
+                        showSuccessNotification('Bu kişi için henüz planlanan beceri bulunmuyor. Önce beceri seçin ve kaydedin.', 'warning');
+                    }
+                } else {
+                    showSuccessNotification('Beceri bilgileri yüklenirken hata oluştu', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('❌ Beceri yükleme hatası:', error);
+                showSuccessNotification('Beceri bilgileri yüklenirken hata oluştu', 'error');
+            });
+    } else {
+        showSuccessNotification('Kişi veya organizasyon bilgisi bulunamadı', 'error');
+    }
+  }
+</script>
+
+<script>
+    function printTable() {
+        // Tablonun bulunduğu div'i seç
+        var tableContent = document.getElementById('tableWrapper').innerHTML;
+
+        // Yeni bir pencere aç
+        var printWindow = window.open('', '', 'height=600,width=800');
+
+        // Yeni pencerenin içeriğini oluştur
+        printWindow.document.write('<html><head><title>Tablo Yazdırma</title>');
+        
+        // Yazdırma için özel CSS stilleri ekle
+        printWindow.document.write('<style>');
+        printWindow.document.write('body { font-family: Arial, sans-serif; margin: 10mm; }'); // Kenar boşlukları ekle
+        printWindow.document.write('h1 { text-align: center; }');
+        printWindow.document.write('.container { width: 100%; box-sizing: border-box; }'); // Kapsayıcıyı tam genişlik yap
+        printWindow.document.write('.excel-table { border-collapse: collapse; width: 100%; }'); // Tabloyu tam genişlik yap
+        
+        // Yazı boyutlarını ve hücre boşluklarını küçült
+        printWindow.document.write('.excel-table, .excel-table th, .excel-table td { border: 1px solid #ccc; padding: 2px; text-align: left; font-size: 8pt; }');
+        printWindow.document.write('.excel-table th { background-color: #f2f2f2; }');
+        
+        // Dönen metinler için küçültme
+        printWindow.document.write('.rotated-header, .vertical-text { white-space: nowrap; transform: scale(0.8); transform-origin: left; }');
+        
+        // input'ları gizle
+        printWindow.document.write('input { display: none; }');
+        
+        // Gereksiz stil ve elementleri gizle
+        printWindow.document.write('.print-button { display: none; }');
+        
+        // Sadece yazdırma çıktısında görülecek stiller
+        printWindow.document.write('@media print { body { -webkit-print-color-adjust: exact; } }'); // Renkleri doğru basması için
+        
+        printWindow.document.write('</style>');
+        printWindow.document.write('</head><body>');
+        
+        // Tablo içeriğini yaz
+        printWindow.document.write(tableContent);
+        
+        printWindow.document.write('</body></html>');
+        
+        // İçeriğin yüklenmesini bekle
+        printWindow.document.close();
+        printWindow.focus();
+        
+        // Yazdırma komutunu çalıştır
+        printWindow.print();
+        
+        // Pencereyi kapat
+        printWindow.close();
+    }
+</script>
+
+<script>
+// Autocomplete fonksiyonları
+let autocompleteTimeout;
+let currentHighlightedIndex = -1;
+let autocompleteResults = [];
+
+// Autocomplete başlatma
+function initAutocomplete() {
+    const input = document.getElementById('newSkillName');
+    const dropdown = document.getElementById('skillAutocompleteDropdown');
+    
+    if (!input || !dropdown) return;
+    
+    // Input event listener
+    input.addEventListener('input', function(e) {
+        const query = e.target.value.trim();
+        
+        // Önceki timeout'u temizle
+        clearTimeout(autocompleteTimeout);
+        
+        if (query.length < 2) {
+            hideAutocomplete();
+            return;
+        }
+        
+        // Debounce - 300ms bekle
+        autocompleteTimeout = setTimeout(() => {
+            searchSkills(query);
+        }, 300);
+    });
+    
+    // Klavye navigasyonu
+    input.addEventListener('keydown', function(e) {
+        if (!dropdown.style.display || dropdown.style.display === 'none') return;
+        
+        switch(e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                highlightNext();
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                highlightPrevious();
+                break;
+            case 'Enter':
+                e.preventDefault();
+                selectHighlighted();
+                break;
+            case 'Escape':
+                hideAutocomplete();
+                break;
+        }
+    });
+    
+    // Input focus/blur
+    input.addEventListener('focus', function() {
+        if (autocompleteResults.length > 0) {
+            showAutocomplete();
+        }
+    });
+    
+    // Dropdown dışına tıklama
+    document.addEventListener('click', function(e) {
+        if (!input.contains(e.target) && !dropdown.contains(e.target)) {
+            hideAutocomplete();
+        }
+    });
+}
+
+// Beceri arama
+function searchSkills(query) {
+    fetch(`api/search_skills.php?q=${encodeURIComponent(query)}&limit=10`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                autocompleteResults = data.skills;
+                displayAutocompleteResults(data.skills);
+            } else {
+                console.error('Arama hatası:', data.message);
+                hideAutocomplete();
+            }
+        })
+        .catch(error => {
+            console.error('Arama hatası:', error);
+            hideAutocomplete();
+        });
+}
+
+// Autocomplete sonuçlarını göster
+function displayAutocompleteResults(skills) {
+    const dropdown = document.getElementById('skillAutocompleteDropdown');
+    if (!dropdown) return;
+    
+    if (skills.length === 0) {
+        dropdown.innerHTML = '<div class="autocomplete-no-results">Sonuç bulunamadı</div>';
+    } else {
+        dropdown.innerHTML = skills.map((skill, index) => `
+            <div class="autocomplete-item" data-index="${index}" onclick="selectSkill(${index})">
+                <div class="autocomplete-item-name">${skill.skill_name}</div>
+                <div class="autocomplete-item-desc">${skill.skill_description || 'Açıklama yok'}</div>
+            </div>
+        `).join('');
+    }
+    
+    showAutocomplete();
+    currentHighlightedIndex = -1;
+}
+
+// Autocomplete'i göster
+function showAutocomplete() {
+    const dropdown = document.getElementById('skillAutocompleteDropdown');
+    if (dropdown) {
+        dropdown.style.display = 'block';
+    }
+}
+
+// Autocomplete'i gizle
+function hideAutocomplete() {
+    const dropdown = document.getElementById('skillAutocompleteDropdown');
+    if (dropdown) {
+        dropdown.style.display = 'none';
+    }
+    currentHighlightedIndex = -1;
+}
+
+// Sonraki öğeyi vurgula
+function highlightNext() {
+    if (autocompleteResults.length === 0) return;
+    
+    currentHighlightedIndex = Math.min(currentHighlightedIndex + 1, autocompleteResults.length - 1);
+    updateHighlight();
+}
+
+// Önceki öğeyi vurgula
+function highlightPrevious() {
+    if (autocompleteResults.length === 0) return;
+    
+    currentHighlightedIndex = Math.max(currentHighlightedIndex - 1, -1);
+    updateHighlight();
+}
+
+// Vurgulamayı güncelle
+function updateHighlight() {
+    const items = document.querySelectorAll('.autocomplete-item');
+    items.forEach((item, index) => {
+        if (index === currentHighlightedIndex) {
+            item.classList.add('highlighted');
+        } else {
+            item.classList.remove('highlighted');
+        }
+    });
+}
+
+// Vurgulanan öğeyi seç
+function selectHighlighted() {
+    if (currentHighlightedIndex >= 0 && currentHighlightedIndex < autocompleteResults.length) {
+        selectSkill(currentHighlightedIndex);
+    }
+}
+
+// Beceri seç
+function selectSkill(index) {
+    if (index >= 0 && index < autocompleteResults.length) {
+        const skill = autocompleteResults[index];
+        const input = document.getElementById('newSkillName');
+        if (input) {
+            input.value = skill.skill_name;
+            hideAutocomplete();
+        }
+    }
+}
+
+// Sayfa yüklendiğinde autocomplete'i başlat
+document.addEventListener('DOMContentLoaded', function() {
+    initAutocomplete();
+});
+</script>
+
+
+
+<div id="cokluBeceriModal" class="modal-container" style="display: none;">
+
+    <div id="cokluBeceriForm" style="position: relative;">
+        <button id="closeCokluBeceriBtn" class="close-btn" type="button" onclick="closeCokluBeceriModal()" title="Kapat">&times;</button>
+
+        <div id="cokluBeceriHeader" class="modal-header-section">
+            <h3>
+                <i class="fas fa-layer-group" style="color: #FFD700; font-size: 28px;"></i>Çoklu Beceri
+            </h3>
+            <p>Organizasyon için beceri seçimi yapın</p>
+        </div>
+
+        <div class="modal-content-area">
+            <div class="skill-table-wrapper">
+                <table class="coklu-beceri-tablosu">
+                    <thead>
+                        <tr>
+                            <th>Organizasyon Adı</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="organization-name">
+                                    <i class="fas fa-building organization-icon"></i>
+                                    <span id="organizationNameCokluBeceri">Organizasyon Adı</span>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="request-button" onclick="sendMultiSkillRequest()">
+                                    İstek Gönder
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+ </body>
+ </html>
