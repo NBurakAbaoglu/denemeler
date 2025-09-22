@@ -1,0 +1,22 @@
+// Eğiticinin eğitimi tablosu oluştur
+$createTableSQL = "
+CREATE TABLE IF NOT EXISTS trainer_training_status (
+    id int(11) NOT NULL AUTO_INCREMENT,
+    planned_multi_skill_id int(11) NOT NULL,
+    person_id int(11) NOT NULL,
+    organization_id int(11) NOT NULL,
+    training_status enum('tamamlanmadı', 'tamamlandı') DEFAULT 'tamamlanmadı',
+    completion_date date NULL,
+    notes text NULL,
+    created_at timestamp NOT NULL DEFAULT current_timestamp(),
+    updated_at timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    PRIMARY KEY (id),
+    UNIQUE KEY unique_multi_skill (planned_multi_skill_id),
+    KEY idx_person_id (person_id),
+    KEY idx_organization_id (organization_id),
+    KEY idx_training_status (training_status),
+    CONSTRAINT trainer_training_ibfk_1 FOREIGN KEY (planned_multi_skill_id) REFERENCES planned_multi_skill (id) ON DELETE CASCADE,
+    CONSTRAINT trainer_training_ibfk_2 FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE,
+    CONSTRAINT trainer_training_ibfk_3 FOREIGN KEY (organization_id) REFERENCES organizations (id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+";
